@@ -10,33 +10,193 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as DealsRouteImport } from './routes/deals'
+import { Route as ExperiencesRouteImport } from './routes/experiences'
+import { Route as FlightsRouteImport } from './routes/flights'
+import { Route as LegalRouteImport } from './routes/legal'
+import { Route as SigninRouteImport } from './routes/signin'
+import { Route as SupportRouteImport } from './routes/support'
+import { Route as TripsRouteImport } from './routes/trips'
+import { Route as DestinationsIndexRouteImport } from './routes/destinations.index'
+import { Route as DestinationsSlugRouteImport } from './routes/destinations.$slug'
+import { Route as HotelsIndexRouteImport } from './routes/hotels.index'
+import { Route as HotelsSlugRouteImport } from './routes/hotels.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DealsRoute = DealsRouteImport.update({
+  id: '/deals',
+  path: '/deals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExperiencesRoute = ExperiencesRouteImport.update({
+  id: '/experiences',
+  path: '/experiences',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FlightsRoute = FlightsRouteImport.update({
+  id: '/flights',
+  path: '/flights',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalRoute = LegalRouteImport.update({
+  id: '/legal',
+  path: '/legal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SigninRoute = SigninRouteImport.update({
+  id: '/signin',
+  path: '/signin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SupportRoute = SupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TripsRoute = TripsRouteImport.update({
+  id: '/trips',
+  path: '/trips',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DestinationsIndexRoute = DestinationsIndexRouteImport.update({
+  id: '/destinations/',
+  path: '/destinations/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DestinationsSlugRoute = DestinationsSlugRouteImport.update({
+  id: '/destinations/$slug',
+  path: '/destinations/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HotelsIndexRoute = HotelsIndexRouteImport.update({
+  id: '/hotels/',
+  path: '/hotels/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HotelsSlugRoute = HotelsSlugRouteImport.update({
+  id: '/hotels/$slug',
+  path: '/hotels/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/deals': typeof DealsRoute
+  '/experiences': typeof ExperiencesRoute
+  '/flights': typeof FlightsRoute
+  '/legal': typeof LegalRoute
+  '/signin': typeof SigninRoute
+  '/support': typeof SupportRoute
+  '/trips': typeof TripsRoute
+  '/destinations/$slug': typeof DestinationsSlugRoute
+  '/hotels/$slug': typeof HotelsSlugRoute
+  '/destinations/': typeof DestinationsIndexRoute
+  '/hotels/': typeof HotelsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/deals': typeof DealsRoute
+  '/experiences': typeof ExperiencesRoute
+  '/flights': typeof FlightsRoute
+  '/legal': typeof LegalRoute
+  '/signin': typeof SigninRoute
+  '/support': typeof SupportRoute
+  '/trips': typeof TripsRoute
+  '/destinations/$slug': typeof DestinationsSlugRoute
+  '/hotels/$slug': typeof HotelsSlugRoute
+  '/destinations': typeof DestinationsIndexRoute
+  '/hotels': typeof HotelsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/deals': typeof DealsRoute
+  '/experiences': typeof ExperiencesRoute
+  '/flights': typeof FlightsRoute
+  '/legal': typeof LegalRoute
+  '/signin': typeof SigninRoute
+  '/support': typeof SupportRoute
+  '/trips': typeof TripsRoute
+  '/destinations/$slug': typeof DestinationsSlugRoute
+  '/hotels/$slug': typeof HotelsSlugRoute
+  '/destinations/': typeof DestinationsIndexRoute
+  '/hotels/': typeof HotelsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/deals'
+    | '/experiences'
+    | '/flights'
+    | '/legal'
+    | '/signin'
+    | '/support'
+    | '/trips'
+    | '/destinations/$slug'
+    | '/hotels/$slug'
+    | '/destinations/'
+    | '/hotels/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/deals'
+    | '/experiences'
+    | '/flights'
+    | '/legal'
+    | '/signin'
+    | '/support'
+    | '/trips'
+    | '/destinations/$slug'
+    | '/hotels/$slug'
+    | '/destinations'
+    | '/hotels'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/deals'
+    | '/experiences'
+    | '/flights'
+    | '/legal'
+    | '/signin'
+    | '/support'
+    | '/trips'
+    | '/destinations/$slug'
+    | '/hotels/$slug'
+    | '/destinations/'
+    | '/hotels/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  DealsRoute: typeof DealsRoute
+  ExperiencesRoute: typeof ExperiencesRoute
+  FlightsRoute: typeof FlightsRoute
+  LegalRoute: typeof LegalRoute
+  SigninRoute: typeof SigninRoute
+  SupportRoute: typeof SupportRoute
+  TripsRoute: typeof TripsRoute
+  DestinationsSlugRoute: typeof DestinationsSlugRoute
+  HotelsSlugRoute: typeof HotelsSlugRoute
+  DestinationsIndexRoute: typeof DestinationsIndexRoute
+  HotelsIndexRoute: typeof HotelsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +208,107 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/deals': {
+      id: '/deals'
+      path: '/deals'
+      fullPath: '/deals'
+      preLoaderRoute: typeof DealsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/experiences': {
+      id: '/experiences'
+      path: '/experiences'
+      fullPath: '/experiences'
+      preLoaderRoute: typeof ExperiencesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/flights': {
+      id: '/flights'
+      path: '/flights'
+      fullPath: '/flights'
+      preLoaderRoute: typeof FlightsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal': {
+      id: '/legal'
+      path: '/legal'
+      fullPath: '/legal'
+      preLoaderRoute: typeof LegalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signin': {
+      id: '/signin'
+      path: '/signin'
+      fullPath: '/signin'
+      preLoaderRoute: typeof SigninRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/support': {
+      id: '/support'
+      path: '/support'
+      fullPath: '/support'
+      preLoaderRoute: typeof SupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/trips': {
+      id: '/trips'
+      path: '/trips'
+      fullPath: '/trips'
+      preLoaderRoute: typeof TripsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/destinations/': {
+      id: '/destinations/'
+      path: '/destinations'
+      fullPath: '/destinations/'
+      preLoaderRoute: typeof DestinationsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/destinations/$slug': {
+      id: '/destinations/$slug'
+      path: '/destinations/$slug'
+      fullPath: '/destinations/$slug'
+      preLoaderRoute: typeof DestinationsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hotels/': {
+      id: '/hotels/'
+      path: '/hotels'
+      fullPath: '/hotels/'
+      preLoaderRoute: typeof HotelsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hotels/$slug': {
+      id: '/hotels/$slug'
+      path: '/hotels/$slug'
+      fullPath: '/hotels/$slug'
+      preLoaderRoute: typeof HotelsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  DealsRoute: DealsRoute,
+  ExperiencesRoute: ExperiencesRoute,
+  FlightsRoute: FlightsRoute,
+  LegalRoute: LegalRoute,
+  SigninRoute: SigninRoute,
+  SupportRoute: SupportRoute,
+  TripsRoute: TripsRoute,
+  DestinationsSlugRoute: DestinationsSlugRoute,
+  HotelsSlugRoute: HotelsSlugRoute,
+  DestinationsIndexRoute: DestinationsIndexRoute,
+  HotelsIndexRoute: HotelsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
