@@ -98,7 +98,9 @@ export function Stars({ count }: { count: number }) {
   );
 }
 
-export function Breadcrumbs({ items }: { items: { label: string; to?: string; params?: never }[] }) {
+type BreadcrumbItem = { label: string; to?: ComponentProps<typeof Link>["to"] };
+
+export function Breadcrumbs({ items }: { items: BreadcrumbItem[] }) {
   return (
     <nav aria-label="Breadcrumb" className="gf-caption text-iron">
       <ol className="flex flex-wrap items-center gap-2">
