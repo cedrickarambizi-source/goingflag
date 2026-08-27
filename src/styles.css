@@ -84,7 +84,7 @@
 }
 
 :root {
-  --radius: 0px;
+  --radius: 12px;
   --background: #ffffff;
   --foreground: #1d1d1f;
   --canvas: #ffffff;
@@ -246,5 +246,51 @@
   *::after {
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---------------------------------------------------------- premium layer */
+
+@utility gf-shadow {
+  box-shadow: var(--shadow-soft);
+}
+
+@utility gf-shadow-lift {
+  box-shadow: var(--shadow-lift);
+}
+
+@utility gf-glass {
+  background-color: color-mix(in oklab, #ffffff 92%, transparent);
+  backdrop-filter: blur(18px) saturate(140%);
+}
+
+@utility gf-scroll-x {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  & > * {
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+  }
+}
+
+@utility gf-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 700ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 700ms cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  &[data-shown="true"] {
+    opacity: 1;
+    transform: none;
   }
 }
