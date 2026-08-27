@@ -13,13 +13,26 @@
  */
 
 @theme inline {
-  --radius-sm: 0px;
-  --radius-md: 0px;
-  --radius-lg: 0px;
-  --radius-xl: 0px;
-  --radius-2xl: 0px;
-  --radius-3xl: 0px;
-  --radius-4xl: 0px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-2xl: 22px;
+  --radius-3xl: 26px;
+  --radius-4xl: 30px;
+
+  /* Premium travel palette: deep navy ink, warm sand, emerald accent, gold. */
+  --color-ink: #0b1220;
+  --color-ink-soft: #16202f;
+  --color-sand: #f7f5f2;
+  --color-sand-deep: #efeae3;
+  --color-emerald: #0f6e52;
+  --color-emerald-soft: #e6f1ec;
+  --color-gold: #c9a227;
+  --color-line: #e6e3de;
+  --shadow-soft: 0 1px 2px rgba(11, 18, 32, 0.04), 0 8px 24px rgba(11, 18, 32, 0.06);
+  --shadow-lift: 0 2px 4px rgba(11, 18, 32, 0.05), 0 18px 48px rgba(11, 18, 32, 0.12);
+
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -71,7 +84,7 @@
 }
 
 :root {
-  --radius: 0px;
+  --radius: 12px;
   --background: #ffffff;
   --foreground: #1d1d1f;
   --canvas: #ffffff;
@@ -233,5 +246,51 @@
   *::after {
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---------------------------------------------------------- premium layer */
+
+@utility gf-shadow {
+  box-shadow: var(--shadow-soft);
+}
+
+@utility gf-shadow-lift {
+  box-shadow: var(--shadow-lift);
+}
+
+@utility gf-glass {
+  background-color: color-mix(in oklab, #ffffff 92%, transparent);
+  backdrop-filter: blur(18px) saturate(140%);
+}
+
+@utility gf-scroll-x {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  & > * {
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+  }
+}
+
+@utility gf-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 700ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 700ms cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  &[data-shown="true"] {
+    opacity: 1;
+    transform: none;
   }
 }
