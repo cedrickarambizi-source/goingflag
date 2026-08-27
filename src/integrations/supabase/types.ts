@@ -14,7 +14,81 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      reservations: {
+        Row: {
+          created_at: string
+          currency: string
+          end_date: string | null
+          id: string
+          image_url: string | null
+          item_slug: string
+          kind: string
+          lead_email: string
+          lead_name: string
+          lead_phone: string | null
+          location: string | null
+          notes: string | null
+          quantity: number
+          reference: string
+          start_date: string | null
+          status: string
+          title: string
+          total_cents: number
+          travellers: number
+          unit_price_cents: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          currency?: string
+          end_date?: string | null
+          id?: string
+          image_url?: string | null
+          item_slug: string
+          kind: string
+          lead_email: string
+          lead_name: string
+          lead_phone?: string | null
+          location?: string | null
+          notes?: string | null
+          quantity?: number
+          reference: string
+          start_date?: string | null
+          status?: string
+          title: string
+          total_cents?: number
+          travellers?: number
+          unit_price_cents?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          currency?: string
+          end_date?: string | null
+          id?: string
+          image_url?: string | null
+          item_slug?: string
+          kind?: string
+          lead_email?: string
+          lead_name?: string
+          lead_phone?: string | null
+          location?: string | null
+          notes?: string | null
+          quantity?: number
+          reference?: string
+          start_date?: string | null
+          status?: string
+          title?: string
+          total_cents?: number
+          travellers?: number
+          unit_price_cents?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
