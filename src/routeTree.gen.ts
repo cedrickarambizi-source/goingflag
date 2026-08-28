@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as DealsRouteImport } from './routes/deals'
 import { Route as ExperiencesRouteImport } from './routes/experiences'
 import { Route as FlightsRouteImport } from './routes/flights'
@@ -18,6 +19,7 @@ import { Route as LegalRouteImport } from './routes/legal'
 import { Route as SigninRouteImport } from './routes/signin'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as TripsRouteImport } from './routes/trips'
+import { Route as BookingReferenceRouteImport } from './routes/booking.$reference'
 import { Route as DestinationsIndexRouteImport } from './routes/destinations.index'
 import { Route as DestinationsSlugRouteImport } from './routes/destinations.$slug'
 import { Route as HotelsIndexRouteImport } from './routes/hotels.index'
@@ -31,6 +33,11 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DealsRoute = DealsRouteImport.update({
@@ -68,6 +75,11 @@ const TripsRoute = TripsRouteImport.update({
   path: '/trips',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BookingReferenceRoute = BookingReferenceRouteImport.update({
+  id: '/booking/$reference',
+  path: '/booking/$reference',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DestinationsIndexRoute = DestinationsIndexRouteImport.update({
   id: '/destinations/',
   path: '/destinations/',
@@ -92,6 +104,7 @@ const HotelsSlugRoute = HotelsSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/checkout': typeof CheckoutRoute
   '/deals': typeof DealsRoute
   '/experiences': typeof ExperiencesRoute
   '/flights': typeof FlightsRoute
@@ -99,6 +112,7 @@ export interface FileRoutesByFullPath {
   '/signin': typeof SigninRoute
   '/support': typeof SupportRoute
   '/trips': typeof TripsRoute
+  '/booking/$reference': typeof BookingReferenceRoute
   '/destinations/$slug': typeof DestinationsSlugRoute
   '/hotels/$slug': typeof HotelsSlugRoute
   '/destinations/': typeof DestinationsIndexRoute
@@ -107,6 +121,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/checkout': typeof CheckoutRoute
   '/deals': typeof DealsRoute
   '/experiences': typeof ExperiencesRoute
   '/flights': typeof FlightsRoute
@@ -114,6 +129,7 @@ export interface FileRoutesByTo {
   '/signin': typeof SigninRoute
   '/support': typeof SupportRoute
   '/trips': typeof TripsRoute
+  '/booking/$reference': typeof BookingReferenceRoute
   '/destinations/$slug': typeof DestinationsSlugRoute
   '/hotels/$slug': typeof HotelsSlugRoute
   '/destinations': typeof DestinationsIndexRoute
@@ -123,6 +139,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/checkout': typeof CheckoutRoute
   '/deals': typeof DealsRoute
   '/experiences': typeof ExperiencesRoute
   '/flights': typeof FlightsRoute
@@ -130,6 +147,7 @@ export interface FileRoutesById {
   '/signin': typeof SigninRoute
   '/support': typeof SupportRoute
   '/trips': typeof TripsRoute
+  '/booking/$reference': typeof BookingReferenceRoute
   '/destinations/$slug': typeof DestinationsSlugRoute
   '/hotels/$slug': typeof HotelsSlugRoute
   '/destinations/': typeof DestinationsIndexRoute
@@ -140,6 +158,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/checkout'
     | '/deals'
     | '/experiences'
     | '/flights'
@@ -147,6 +166,7 @@ export interface FileRouteTypes {
     | '/signin'
     | '/support'
     | '/trips'
+    | '/booking/$reference'
     | '/destinations/$slug'
     | '/hotels/$slug'
     | '/destinations/'
@@ -155,6 +175,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/checkout'
     | '/deals'
     | '/experiences'
     | '/flights'
@@ -162,6 +183,7 @@ export interface FileRouteTypes {
     | '/signin'
     | '/support'
     | '/trips'
+    | '/booking/$reference'
     | '/destinations/$slug'
     | '/hotels/$slug'
     | '/destinations'
@@ -170,6 +192,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/checkout'
     | '/deals'
     | '/experiences'
     | '/flights'
@@ -177,6 +200,7 @@ export interface FileRouteTypes {
     | '/signin'
     | '/support'
     | '/trips'
+    | '/booking/$reference'
     | '/destinations/$slug'
     | '/hotels/$slug'
     | '/destinations/'
@@ -186,6 +210,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  CheckoutRoute: typeof CheckoutRoute
   DealsRoute: typeof DealsRoute
   ExperiencesRoute: typeof ExperiencesRoute
   FlightsRoute: typeof FlightsRoute
@@ -193,6 +218,7 @@ export interface RootRouteChildren {
   SigninRoute: typeof SigninRoute
   SupportRoute: typeof SupportRoute
   TripsRoute: typeof TripsRoute
+  BookingReferenceRoute: typeof BookingReferenceRoute
   DestinationsSlugRoute: typeof DestinationsSlugRoute
   HotelsSlugRoute: typeof HotelsSlugRoute
   DestinationsIndexRoute: typeof DestinationsIndexRoute
@@ -213,6 +239,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/deals': {
@@ -264,6 +297,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TripsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/booking/$reference': {
+      id: '/booking/$reference'
+      path: '/booking/$reference'
+      fullPath: '/booking/$reference'
+      preLoaderRoute: typeof BookingReferenceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/destinations/': {
       id: '/destinations/'
       path: '/destinations'
@@ -298,6 +338,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  CheckoutRoute: CheckoutRoute,
   DealsRoute: DealsRoute,
   ExperiencesRoute: ExperiencesRoute,
   FlightsRoute: FlightsRoute,
@@ -305,6 +346,7 @@ const rootRouteChildren: RootRouteChildren = {
   SigninRoute: SigninRoute,
   SupportRoute: SupportRoute,
   TripsRoute: TripsRoute,
+  BookingReferenceRoute: BookingReferenceRoute,
   DestinationsSlugRoute: DestinationsSlugRoute,
   HotelsSlugRoute: HotelsSlugRoute,
   DestinationsIndexRoute: DestinationsIndexRoute,
