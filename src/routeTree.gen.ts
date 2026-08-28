@@ -19,6 +19,7 @@ import { Route as LegalRouteImport } from './routes/legal'
 import { Route as SigninRouteImport } from './routes/signin'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as TripsRouteImport } from './routes/trips'
+import { Route as BookingReferenceRouteImport } from './routes/booking.$reference'
 import { Route as DestinationsIndexRouteImport } from './routes/destinations.index'
 import { Route as DestinationsSlugRouteImport } from './routes/destinations.$slug'
 import { Route as HotelsIndexRouteImport } from './routes/hotels.index'
@@ -74,6 +75,11 @@ const TripsRoute = TripsRouteImport.update({
   path: '/trips',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BookingReferenceRoute = BookingReferenceRouteImport.update({
+  id: '/booking/$reference',
+  path: '/booking/$reference',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DestinationsIndexRoute = DestinationsIndexRouteImport.update({
   id: '/destinations/',
   path: '/destinations/',
@@ -106,6 +112,7 @@ export interface FileRoutesByFullPath {
   '/signin': typeof SigninRoute
   '/support': typeof SupportRoute
   '/trips': typeof TripsRoute
+  '/booking/$reference': typeof BookingReferenceRoute
   '/destinations/$slug': typeof DestinationsSlugRoute
   '/hotels/$slug': typeof HotelsSlugRoute
   '/destinations/': typeof DestinationsIndexRoute
@@ -122,6 +129,7 @@ export interface FileRoutesByTo {
   '/signin': typeof SigninRoute
   '/support': typeof SupportRoute
   '/trips': typeof TripsRoute
+  '/booking/$reference': typeof BookingReferenceRoute
   '/destinations/$slug': typeof DestinationsSlugRoute
   '/hotels/$slug': typeof HotelsSlugRoute
   '/destinations': typeof DestinationsIndexRoute
@@ -139,6 +147,7 @@ export interface FileRoutesById {
   '/signin': typeof SigninRoute
   '/support': typeof SupportRoute
   '/trips': typeof TripsRoute
+  '/booking/$reference': typeof BookingReferenceRoute
   '/destinations/$slug': typeof DestinationsSlugRoute
   '/hotels/$slug': typeof HotelsSlugRoute
   '/destinations/': typeof DestinationsIndexRoute
@@ -157,6 +166,7 @@ export interface FileRouteTypes {
     | '/signin'
     | '/support'
     | '/trips'
+    | '/booking/$reference'
     | '/destinations/$slug'
     | '/hotels/$slug'
     | '/destinations/'
@@ -173,6 +183,7 @@ export interface FileRouteTypes {
     | '/signin'
     | '/support'
     | '/trips'
+    | '/booking/$reference'
     | '/destinations/$slug'
     | '/hotels/$slug'
     | '/destinations'
@@ -189,6 +200,7 @@ export interface FileRouteTypes {
     | '/signin'
     | '/support'
     | '/trips'
+    | '/booking/$reference'
     | '/destinations/$slug'
     | '/hotels/$slug'
     | '/destinations/'
@@ -206,6 +218,7 @@ export interface RootRouteChildren {
   SigninRoute: typeof SigninRoute
   SupportRoute: typeof SupportRoute
   TripsRoute: typeof TripsRoute
+  BookingReferenceRoute: typeof BookingReferenceRoute
   DestinationsSlugRoute: typeof DestinationsSlugRoute
   HotelsSlugRoute: typeof HotelsSlugRoute
   DestinationsIndexRoute: typeof DestinationsIndexRoute
@@ -284,6 +297,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TripsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/booking/$reference': {
+      id: '/booking/$reference'
+      path: '/booking/$reference'
+      fullPath: '/booking/$reference'
+      preLoaderRoute: typeof BookingReferenceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/destinations/': {
       id: '/destinations/'
       path: '/destinations'
@@ -326,6 +346,7 @@ const rootRouteChildren: RootRouteChildren = {
   SigninRoute: SigninRoute,
   SupportRoute: SupportRoute,
   TripsRoute: TripsRoute,
+  BookingReferenceRoute: BookingReferenceRoute,
   DestinationsSlugRoute: DestinationsSlugRoute,
   HotelsSlugRoute: HotelsSlugRoute,
   DestinationsIndexRoute: DestinationsIndexRoute,
