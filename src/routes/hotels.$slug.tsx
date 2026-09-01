@@ -1,5 +1,5 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import { Breadcrumbs, GfButton, GfButtonLink, Price, SectionHead, Stars } from "@/components/gf/ui";
+import { Breadcrumbs, GfButtonLink, Price, SectionHead, Stars } from "@/components/gf/ui";
 import { getHotel, money } from "@/lib/gf/data";
 import { photo } from "@/lib/gf/photos";
 
@@ -120,7 +120,22 @@ function HotelDetail() {
                   </div>
                   <div className="flex items-center gap-6">
                     <Price value={money(r.price)} />
-                    <GfButton>Reserve</GfButton>
+                    <GfButtonLink
+                      to="/checkout"
+                      search={{
+                        kind: "stay",
+                        slug: `${h.slug}--${r.name.toLowerCase().replace(/\s+/g, "-")}`,
+                        title: `${h.name} — ${r.name}`,
+                        location: `${h.destination}, ${h.country}`,
+                        image: photo(h.photoId, 800, 1.33),
+                        price: r.price,
+                        unit: "night",
+                        travellers: 2,
+                        quantity: 2,
+                      }}
+                    >
+                      Reserve
+                    </GfButtonLink>
                   </div>
                 </li>
               ))}

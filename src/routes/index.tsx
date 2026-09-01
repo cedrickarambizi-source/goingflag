@@ -392,7 +392,7 @@ function Home() {
               <figure key={t.author} className="rounded-2xl bg-white p-6">
                 <blockquote className="text-[20px] leading-[1.3] tracking-[-0.01em]">“{t.quote}”</blockquote>
                 <figcaption className="gf-caption mt-5 text-iron">
-                  {t.author} · {t.trip}
+                  {t.author} · {t.place}
                 </figcaption>
               </figure>
             ))}
