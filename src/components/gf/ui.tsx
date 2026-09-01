@@ -42,7 +42,7 @@ export function ArrowLink({ className, children, ...props }: ComponentProps<type
       )}
       {...props}
     >
-      {children}
+      {children as ReactNode}
       <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">
         →
       </span>
@@ -118,5 +118,43 @@ export function Breadcrumbs({ items }: { items: BreadcrumbItem[] }) {
         ))}
       </ol>
     </nav>
+  );
+}
+
+/* ------------------------------------------------------ Checkout CTA link */
+
+export type CheckoutDraft = {
+  kind: "stay" | "flight" | "experience" | "transfer" | "car" | "package";
+  slug: string;
+  title: string;
+  location?: string;
+  image?: string;
+  price: number;
+  unit: string;
+  start?: string;
+  end?: string;
+  travellers?: number;
+  quantity?: number;
+};
+
+export function CheckoutLink({
+  draft,
+  variant = "primary",
+  className,
+  children,
+}: {
+  draft: CheckoutDraft;
+  variant?: ButtonVariant;
+  className?: string;
+  children: ReactNode;
+}) {
+  return (
+    <Link
+      to="/checkout"
+      search={draft}
+      className={cn(buttonBase, buttonVariants[variant], className)}
+    >
+      {children}
+    </Link>
   );
 }

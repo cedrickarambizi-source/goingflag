@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Breadcrumbs, GfButton, Price, SectionHead } from "@/components/gf/ui";
+import { Breadcrumbs, GfButtonLink, CheckoutLink, Price, SectionHead } from "@/components/gf/ui";
 import { experiences, money } from "@/lib/gf/data";
 import { photo } from "@/lib/gf/photos";
 
@@ -50,7 +50,22 @@ function Experiences() {
               </p>
               <div className="mt-4 flex items-center justify-between gap-4">
                 <Price value={money(e.price)} suffix="per person" />
-                <GfButton variant="secondary">Book</GfButton>
+                <CheckoutLink
+                  variant="secondary"
+                  draft={{
+                    kind: "experience",
+                    slug: e.slug,
+                    title: e.name,
+                    location: `${e.place}, ${e.country}`,
+                    image: photo(e.photoId, 800, 1.33),
+                    price: e.price,
+                    unit: "person",
+                    travellers: 2,
+                    quantity: 2,
+                  }}
+                >
+                  Book
+                </CheckoutLink>
               </div>
             </div>
           </article>
