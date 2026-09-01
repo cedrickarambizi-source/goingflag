@@ -120,7 +120,7 @@ function HotelDetail() {
                   </div>
                   <div className="flex items-center gap-6">
                     <Price value={money(r.price)} />
-                    <GfButtonLink
+                    <GFBL
                       to="/checkout"
                       search={{
                         kind: "stay",

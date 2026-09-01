@@ -148,7 +148,7 @@ function Home() {
                   </p>
                   <div className="mt-auto flex items-center justify-between gap-3 pt-4">
                     <Price value={money(h.nightly)} suffix="/ night" />
-                    <GfButtonLink
+                    <GFBL
                       to="/checkout"
                       search={{
                         kind: "stay",
@@ -255,7 +255,7 @@ function Home() {
                 </p>
                 <div className="mt-4 flex items-center justify-between gap-3">
                   <Price value={money(e.price)} suffix="per person" />
-                  <GfButtonLink
+                  <GFBL
                     to="/checkout"
                     variant="secondary"
                     search={{
@@ -294,7 +294,7 @@ function Home() {
               ))}
             </ul>
             <div className="mt-8">
-              <GfButtonLink
+              <GFBL
                 to="/checkout"
                 search={{
                   kind: "transfer",

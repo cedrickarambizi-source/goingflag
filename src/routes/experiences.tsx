@@ -50,7 +50,7 @@ function Experiences() {
               </p>
               <div className="mt-4 flex items-center justify-between gap-4">
                 <Price value={money(e.price)} suffix="per person" />
-                <GfButtonLink
+                <GFBL
                   to="/checkout"
                   variant="secondary"
                   search={{
