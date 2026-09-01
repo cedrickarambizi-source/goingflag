@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Breadcrumbs, GfButtonLink, Price, SectionHead } from "@/components/gf/ui";
+import { Breadcrumbs, GfButtonLink, CheckoutLink, Price, SectionHead } from "@/components/gf/ui";
 import { experiences, money } from "@/lib/gf/data";
 import { photo } from "@/lib/gf/photos";
 
@@ -50,10 +50,9 @@ function Experiences() {
               </p>
               <div className="mt-4 flex items-center justify-between gap-4">
                 <Price value={money(e.price)} suffix="per person" />
-                <GFBL
-                  to="/checkout"
+                <CheckoutLink
                   variant="secondary"
-                  search={{
+                  draft={{
                     kind: "experience",
                     slug: e.slug,
                     title: e.name,
@@ -66,7 +65,7 @@ function Experiences() {
                   }}
                 >
                   Book
-                </GfButtonLink>
+                </CheckoutLink>
               </div>
             </div>
           </article>

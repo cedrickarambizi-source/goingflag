@@ -1,5 +1,5 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import { Breadcrumbs, GfButtonLink, Price, SectionHead, Stars } from "@/components/gf/ui";
+import { Breadcrumbs, GfButtonLink, CheckoutLink, Price, SectionHead, Stars } from "@/components/gf/ui";
 import { getHotel, money } from "@/lib/gf/data";
 import { photo } from "@/lib/gf/photos";
 
@@ -120,9 +120,8 @@ function HotelDetail() {
                   </div>
                   <div className="flex items-center gap-6">
                     <Price value={money(r.price)} />
-                    <GFBL
-                      to="/checkout"
-                      search={{
+                    <CheckoutLink
+                      draft={{
                         kind: "stay",
                         slug: `${h.slug}--${r.name.toLowerCase().replace(/\s+/g, "-")}`,
                         title: `${h.name} — ${r.name}`,
@@ -135,7 +134,7 @@ function HotelDetail() {
                       }}
                     >
                       Reserve
-                    </GfButtonLink>
+                    </CheckoutLink>
                   </div>
                 </li>
               ))}

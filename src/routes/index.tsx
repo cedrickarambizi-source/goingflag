@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { HeroSearch } from "@/components/gf/HeroSearch";
-import { ArrowLink, GfButtonLink, Price, SectionHead, Stars } from "@/components/gf/ui";
+import { ArrowLink, GfButtonLink, CheckoutLink, Price, SectionHead, Stars } from "@/components/gf/ui";
 import {
   destinations,
   experiences,
@@ -148,9 +148,8 @@ function Home() {
                   </p>
                   <div className="mt-auto flex items-center justify-between gap-3 pt-4">
                     <Price value={money(h.nightly)} suffix="/ night" />
-                    <GFBL
-                      to="/checkout"
-                      search={{
+                    <CheckoutLink
+                      draft={{
                         kind: "stay",
                         slug: h.slug,
                         title: h.name,
@@ -164,7 +163,7 @@ function Home() {
                       className="px-5 py-[10px]"
                     >
                       Reserve
-                    </GfButtonLink>
+                    </CheckoutLink>
                   </div>
                 </div>
               </article>
@@ -255,10 +254,9 @@ function Home() {
                 </p>
                 <div className="mt-4 flex items-center justify-between gap-3">
                   <Price value={money(e.price)} suffix="per person" />
-                  <GFBL
-                    to="/checkout"
+                  <CheckoutLink
                     variant="secondary"
-                    search={{
+                    draft={{
                       kind: "experience",
                       slug: e.slug,
                       title: e.name,
@@ -272,7 +270,7 @@ function Home() {
                     className="px-5 py-[10px]"
                   >
                     Book
-                  </GfButtonLink>
+                  </CheckoutLink>
                 </div>
               </div>
             </article>
@@ -294,9 +292,8 @@ function Home() {
               ))}
             </ul>
             <div className="mt-8">
-              <GFBL
-                to="/checkout"
-                search={{
+              <CheckoutLink
+                draft={{
                   kind: "transfer",
                   slug: "kgl-airport-transfer",
                   title: "Kigali airport transfer",
@@ -310,7 +307,7 @@ function Home() {
                 className="border-white bg-white text-ink hover:bg-sand"
               >
                 Book a transfer — from $28
-              </GfButtonLink>
+              </CheckoutLink>
             </div>
           </div>
           <div className="gf-frame aspect-[3/2] rounded-3xl">
