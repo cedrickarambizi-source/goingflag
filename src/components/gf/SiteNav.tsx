@@ -15,9 +15,11 @@ export function SiteNav() {
   return (
     <header className="sticky top-0 z-50 border-b border-black bg-white">
       <div className="gf-shell grid h-[60px] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4 md:h-[68px]">
-        <Link to="/" className="shrink-0 text-[15px] font-medium tracking-[0.14em]">
-          GOINGFLAG
+        <Link to="/" className="flex shrink-0 items-center gap-2" aria-label="GoingFlag home">
+          <img src={logoAsset.url} alt="GoingFlag Travel & Booking logo" className="h-8 w-8 object-contain" />
+          <span className="text-[15px] font-medium tracking-[0.14em]">GOINGFLAG</span>
         </Link>
+
 
         <nav aria-label="Primary" className="hidden min-w-0 justify-center gap-8 md:flex">
           {LINKS.map((l) => (
