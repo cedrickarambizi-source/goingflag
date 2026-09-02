@@ -1,5 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
+import logoAsset from "@/assets/goingflag-logo.png.asset.json";
+
 
 const LINKS = [
   { to: "/destinations", label: "Explore" },
