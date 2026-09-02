@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { HOME_BASE } from "@/lib/gf/data";
+import logoAsset from "@/assets/goingflag-logo.png.asset.json";
+
 
 const COLUMNS = [
   {
