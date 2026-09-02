@@ -151,9 +151,10 @@ export function CheckoutLink({
   return (
     <Link
       to="/checkout"
-      search={draft}
+      search={{ travellers: 1, quantity: 1, ...draft }}
       className={cn(buttonBase, buttonVariants[variant], className)}
     >
+
       {children}
     </Link>
   );
