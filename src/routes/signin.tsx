@@ -70,7 +70,7 @@ function SignIn() {
     return (
       <div className="gf-shell gf-section">
         <div className="max-w-md">
-          <SectionHead index="Account" title="You're signed in" intro={user.email ?? undefined} />
+          <SectionHead index="Account" title="You're signed in" {...(user.email ? { intro: user.email } : {})} />
           <div className="mt-[30px] flex flex-wrap gap-[10px]">
             <GfButtonLink to="/trips">Open my trips</GfButtonLink>
             <GfButton variant="secondary" onClick={() => signOut()}>

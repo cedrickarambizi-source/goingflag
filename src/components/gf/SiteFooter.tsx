@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { HOME_BASE } from "@/lib/gf/data";
+import logoAsset from "@/assets/goingflag-logo.png.asset.json";
+
 
 const COLUMNS = [
   {
@@ -47,7 +49,11 @@ export function SiteFooter() {
       <div className="gf-shell gf-section">
         <div className="grid gap-[30px] md:grid-cols-[minmax(0,1.1fr)_minmax(0,1.4fr)] md:gap-[72px]">
           <div>
-            <p className="text-[20px] font-medium tracking-[0.14em]">GOINGFLAG</p>
+            <div className="flex items-center gap-3">
+              <img src={logoAsset.url} alt="GoingFlag Travel & Booking logo" className="h-10 w-10 object-contain" />
+              <p className="text-[20px] font-medium tracking-[0.14em]">GOINGFLAG</p>
+            </div>
+
             <p className="gf-body mt-4 max-w-xs text-graphite">
               {HOME_BASE.district}, {HOME_BASE.city}, {HOME_BASE.country}. A gallery for travel, with a
               booking engine behind it.
