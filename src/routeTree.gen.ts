@@ -16,6 +16,7 @@ import { Route as DealsRouteImport } from './routes/deals'
 import { Route as ExperiencesRouteImport } from './routes/experiences'
 import { Route as FlightsRouteImport } from './routes/flights'
 import { Route as LegalRouteImport } from './routes/legal'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SigninRouteImport } from './routes/signin'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as TripsRouteImport } from './routes/trips'
@@ -58,6 +59,11 @@ const FlightsRoute = FlightsRouteImport.update({
 const LegalRoute = LegalRouteImport.update({
   id: '/legal',
   path: '/legal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SigninRoute = SigninRouteImport.update({
@@ -109,6 +115,7 @@ export interface FileRoutesByFullPath {
   '/experiences': typeof ExperiencesRoute
   '/flights': typeof FlightsRoute
   '/legal': typeof LegalRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/signin': typeof SigninRoute
   '/support': typeof SupportRoute
   '/trips': typeof TripsRoute
@@ -126,6 +133,7 @@ export interface FileRoutesByTo {
   '/experiences': typeof ExperiencesRoute
   '/flights': typeof FlightsRoute
   '/legal': typeof LegalRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/signin': typeof SigninRoute
   '/support': typeof SupportRoute
   '/trips': typeof TripsRoute
@@ -144,6 +152,7 @@ export interface FileRoutesById {
   '/experiences': typeof ExperiencesRoute
   '/flights': typeof FlightsRoute
   '/legal': typeof LegalRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/signin': typeof SigninRoute
   '/support': typeof SupportRoute
   '/trips': typeof TripsRoute
@@ -163,6 +172,7 @@ export interface FileRouteTypes {
     | '/experiences'
     | '/flights'
     | '/legal'
+    | '/reset-password'
     | '/signin'
     | '/support'
     | '/trips'
@@ -180,6 +190,7 @@ export interface FileRouteTypes {
     | '/experiences'
     | '/flights'
     | '/legal'
+    | '/reset-password'
     | '/signin'
     | '/support'
     | '/trips'
@@ -197,6 +208,7 @@ export interface FileRouteTypes {
     | '/experiences'
     | '/flights'
     | '/legal'
+    | '/reset-password'
     | '/signin'
     | '/support'
     | '/trips'
@@ -215,6 +227,7 @@ export interface RootRouteChildren {
   ExperiencesRoute: typeof ExperiencesRoute
   FlightsRoute: typeof FlightsRoute
   LegalRoute: typeof LegalRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SigninRoute: typeof SigninRoute
   SupportRoute: typeof SupportRoute
   TripsRoute: typeof TripsRoute
@@ -274,6 +287,13 @@ declare module '@tanstack/react-router' {
       path: '/legal'
       fullPath: '/legal'
       preLoaderRoute: typeof LegalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/signin': {
@@ -343,6 +363,7 @@ const rootRouteChildren: RootRouteChildren = {
   ExperiencesRoute: ExperiencesRoute,
   FlightsRoute: FlightsRoute,
   LegalRoute: LegalRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   SigninRoute: SigninRoute,
   SupportRoute: SupportRoute,
   TripsRoute: TripsRoute,
