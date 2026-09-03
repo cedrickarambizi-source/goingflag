@@ -137,7 +137,7 @@ export function SiteNav() {
       {open ? (
         <div id="gf-mobile-nav" className="border-t border-hairline bg-white md:hidden">
           <nav aria-label="Mobile" className="gf-shell flex flex-col py-[10px]">
-            {[...LINKS, { to: "/trips", label: "Trips" }, { to: "/signin", label: "Sign in" }].map((l) => (
+            {[...LINKS, { to: "/trips", label: "Trips" }].map((l) => (
               <Link
                 key={l.to}
                 to={l.to}
@@ -147,6 +147,23 @@ export function SiteNav() {
                 {l.label}
               </Link>
             ))}
+            {user ? (
+              <button
+                type="button"
+                onClick={handleSignOut}
+                className="py-4 text-left text-[20px] font-medium"
+              >
+                Sign out
+              </button>
+            ) : (
+              <Link
+                to="/signin"
+                onClick={() => setOpen(false)}
+                className="py-4 text-[20px] font-medium"
+              >
+                Sign in
+              </Link>
+            )}
           </nav>
         </div>
       ) : null}
