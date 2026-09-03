@@ -15,6 +15,29 @@ const LINKS = [
 
 export function SiteNav() {
   const [open, setOpen] = useState(false);
+  const [menu, setMenu] = useState(false);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+  const navigate = useNavigate();
+  const { user, loading, signOut } = useAuth();
+
+  useEffect(() => {
+    if (!menu) return;
+    function onDown(e: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) setMenu(false);
+    }
+    document.addEventListener("mousedown", onDown);
+    return () => document.removeEventListener("mousedown", onDown);
+  }, [menu]);
+
+  async function handleSignOut() {
+    setMenu(false);
+    setOpen(false);
+    await signOut();
+    navigate({ to: "/" });
+  }
+
+  const initial = (user?.email ?? "?").charAt(0).toUpperCase();
+
 
   return (
     <header className="sticky top-0 z-50 border-b border-black bg-white">
