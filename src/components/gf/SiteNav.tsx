@@ -1,6 +1,8 @@
-import { Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useEffect, useRef, useState } from "react";
 import logoAsset from "@/assets/goingflag-logo.png.asset.json";
+import { useAuth } from "@/hooks/useAuth";
+
 
 
 const LINKS = [
