@@ -63,13 +63,13 @@ function SignIn() {
 
   function validate() {
     const next: Record<string, string> = {};
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim())) next.email = "Enter a valid email address.";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim())) next['email'] = "Enter a valid email address.";
     if (mode !== "forgot") {
-      if (password.length < 8) next.password = "Use at least 8 characters.";
+      if (password.length < 8) next['password'] = "Use at least 8 characters.";
       else if (mode === "signup" && !/[0-9]/.test(password))
-        next.password = "Include at least one number for a stronger password.";
+        next['password'] = "Include at least one number for a stronger password.";
     }
-    if (mode === "signup" && confirm !== password) next.confirm = "Passwords do not match.";
+    if (mode === "signup" && confirm !== password) next['confirm'] = "Passwords do not match.";
     setErrors(next);
     return Object.keys(next).length === 0;
   }

@@ -52,9 +52,9 @@ function ResetPassword() {
     e.preventDefault();
     setFormError(null);
     const next: Record<string, string> = {};
-    if (password.length < 8) next.password = "Use at least 8 characters.";
-    else if (!/[0-9]/.test(password)) next.password = "Include at least one number.";
-    if (confirm !== password) next.confirm = "Passwords do not match.";
+    if (password.length < 8) next['password'] = "Use at least 8 characters.";
+    else if (!/[0-9]/.test(password)) next['password'] = "Include at least one number.";
+    if (confirm !== password) next['confirm'] = "Passwords do not match.";
     setErrors(next);
     if (Object.keys(next).length) return;
 
