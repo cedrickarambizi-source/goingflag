@@ -11,13 +11,24 @@ const DESTINATIONS: Record<SearchTab, { to: "/hotels" | "/flights" | "/experienc
   transfers: { to: "/experiences" },
 };
 
+const field =
+  "w-full bg-transparent text-[15px] font-medium text-ink placeholder:text-smoke focus:outline-none";
+const labelText = "gf-caption text-iron";
+const cell = "min-w-0 flex-1 rounded-xl bg-white px-4 py-3 ring-1 ring-line focus-within:ring-2 focus-within:ring-emerald";
+
 export function HeroSearch() {
   const navigate = useNavigate();
   const [tab, setTab] = useState<SearchTab>("stays");
-  const [place, setPlace] = useState("Zanzibar, Tanzania");
+  const [place, setPlace] = useState("Kigali, Rwanda");
+  const [pickup, setPickup] = useState("");
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const [travellers, setTravellers] = useState(2);
+  const [rooms, setRooms] = useState(1);
+  const [work, setWork] = useState(false);
+  const [trip, setTrip] = useState<"one-way" | "return">("one-way");
+
+  const isTransfer = tab === "transfers";
 
   return (
     <form
@@ -31,7 +42,7 @@ export function HeroSearch() {
         }
         navigate({ to });
       }}
-      className="gf-glass gf-shadow-lift rounded-3xl border border-white/40 p-4 md:p-5"
+      className="w-full"
     >
       <div className="gf-scroll-x -mx-1 px-1 pb-1" role="tablist" aria-label="Search type">
         {SEARCH_TABS.map((t) => (
@@ -44,8 +55,8 @@ export function HeroSearch() {
             className={cn(
               "gf-caption rounded-full border px-4 py-[9px] transition-colors",
               tab === t.id
-                ? "border-ink bg-ink text-white"
-                : "border-line bg-white/70 text-graphite hover:border-ink hover:text-ink",
+                ? "border-white bg-white text-ink"
+                : "border-white/40 text-white/85 hover:border-white hover:text-white",
             )}
           >
             {t.label}
@@ -53,76 +64,130 @@ export function HeroSearch() {
         ))}
       </div>
 
-      <div className="mt-4 grid gap-3 rounded-2xl border border-line bg-white p-3 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,1fr)_auto] md:items-end">
-        <label className="block">
-          <span className="gf-caption text-iron">Where to</span>
-          <input
-            list="gf-places"
-            value={place}
-            onChange={(e) => setPlace(e.target.value)}
-            placeholder="City, region or property"
-            className="mt-2 w-full rounded-xl border border-line bg-sand px-3 py-3 text-[15px] text-ink placeholder:text-smoke focus:outline-none focus-visible:border-emerald"
-          />
-          <datalist id="gf-places">
-            {POPULAR_PLACES.map((p) => (
-              <option key={p} value={p} />
-            ))}
-          </datalist>
-        </label>
+      {isTransfer ? (
+        <div className="mt-5 flex flex-wrap items-center gap-5">
+          {(["one-way", "return"] as const).map((mode) => (
+            <label key={mode} className="flex cursor-pointer items-center gap-2 text-[15px] text-white">
+              <input
+                type="radio"
+                name="trip-type"
+                checked={trip === mode}
+                onChange={() => setTrip(mode)}
+                className="h-4 w-4 accent-white"
+              />
+              {mode === "one-way" ? "One-way" : "Return"}
+            </label>
+          ))}
+        </div>
+      ) : null}
 
-        <label className="block">
-          <span className="gf-caption text-iron">{tab === "flights" ? "Depart" : "Check in"}</span>
-          <input
-            type="date"
-            value={start}
-            onChange={(e) => setStart(e.target.value)}
-            className="gf-nums mt-2 w-full rounded-xl border border-line bg-sand px-3 py-3 text-[15px] text-ink focus:outline-none focus-visible:border-emerald"
-          />
-        </label>
+      <div className="mt-4 rounded-2xl bg-gold p-[3px] shadow-[0_18px_40px_-24px_rgba(11,18,32,0.55)]">
+        <div className="flex flex-col gap-[3px] md:flex-row md:items-stretch">
+          {isTransfer ? (
+            <label className={cell}>
+              <span className={labelText}>Pick-up location</span>
+              <input
+                value={pickup}
+                onChange={(e) => setPickup(e.target.value)}
+                placeholder="Airport, hotel or address"
+                className={cn(field, "mt-1")}
+              />
+            </label>
+          ) : null}
 
-        <label className="block">
-          <span className="gf-caption text-iron">{tab === "flights" ? "Return" : "Check out"}</span>
-          <input
-            type="date"
-            value={end}
-            onChange={(e) => setEnd(e.target.value)}
-            className="gf-nums mt-2 w-full rounded-xl border border-line bg-sand px-3 py-3 text-[15px] text-ink focus:outline-none focus-visible:border-emerald"
-          />
-        </label>
-
-        <div className="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3 md:grid-cols-1">
-          <label className="block md:hidden">
-            <span className="gf-caption text-iron">Travellers</span>
+          <label className={cn(cell, !isTransfer && "md:flex-[1.5]")}>
+            <span className={labelText}>{isTransfer ? "Destination" : "Where to"}</span>
             <input
-              type="number"
-              min={1}
-              max={20}
-              value={travellers}
-              onChange={(e) => setTravellers(Number(e.target.value))}
-              className="gf-nums mt-2 w-full rounded-xl border border-line bg-sand px-3 py-3 text-[15px] text-ink focus:outline-none"
+              list="gf-places"
+              value={place}
+              onChange={(e) => setPlace(e.target.value)}
+              placeholder="City, region or property"
+              className={cn(field, "mt-1")}
+            />
+            <datalist id="gf-places">
+              {POPULAR_PLACES.map((p) => (
+                <option key={p} value={p} />
+              ))}
+            </datalist>
+          </label>
+
+          <label className={cell}>
+            <span className={labelText}>
+              {tab === "flights" ? "Depart" : isTransfer ? "Pick-up date" : "Check in"}
+            </span>
+            <input
+              type="date"
+              value={start}
+              onChange={(e) => setStart(e.target.value)}
+              className={cn(field, "gf-nums mt-1")}
             />
           </label>
+
+          {!isTransfer || trip === "return" ? (
+            <label className={cell}>
+              <span className={labelText}>
+                {tab === "flights" ? "Return" : isTransfer ? "Return date" : "Check out"}
+              </span>
+              <input
+                type="date"
+                value={end}
+                onChange={(e) => setEnd(e.target.value)}
+                className={cn(field, "gf-nums mt-1")}
+              />
+            </label>
+          ) : null}
+
+          <div className={cn(cell, "md:max-w-[220px]")}>
+            <span className={labelText}>{isTransfer ? "Passengers" : "Travellers"}</span>
+            <div className="mt-1 flex items-center gap-2">
+              <input
+                type="number"
+                min={1}
+                max={20}
+                value={travellers}
+                onChange={(e) => setTravellers(Number(e.target.value))}
+                aria-label="Travellers"
+                className={cn(field, "gf-nums w-12")}
+              />
+              <span className="gf-body text-graphite">{isTransfer ? "passengers" : "guests"}</span>
+              {!isTransfer && tab === "stays" ? (
+                <>
+                  <span className="text-iron">·</span>
+                  <input
+                    type="number"
+                    min={1}
+                    max={10}
+                    value={rooms}
+                    onChange={(e) => setRooms(Number(e.target.value))}
+                    aria-label="Rooms"
+                    className={cn(field, "gf-nums w-10")}
+                  />
+                  <span className="gf-body text-graphite">rooms</span>
+                </>
+              ) : null}
+            </div>
+          </div>
+
           <button
             type="submit"
-            className="rounded-xl bg-emerald px-6 py-[14px] text-[15px] font-medium text-white transition-colors hover:bg-ink"
+            className="gf-sub rounded-xl bg-emerald px-8 py-4 text-white transition-colors hover:bg-ink md:min-w-[140px]"
           >
             Search
           </button>
         </div>
       </div>
 
-      <div className="mt-3 hidden items-center gap-3 md:flex">
-        <span className="gf-caption text-iron">Travellers</span>
-        <input
-          type="number"
-          min={1}
-          max={20}
-          value={travellers}
-          onChange={(e) => setTravellers(Number(e.target.value))}
-          className="gf-nums w-20 rounded-full border border-line bg-white px-3 py-2 text-[15px] text-ink focus:outline-none"
-        />
-        <span className="gf-body text-graphite">Free cancellation on most stays · one total, taxes included</span>
-      </div>
+      {!isTransfer ? (
+        <label className="mt-4 flex cursor-pointer items-center gap-2 text-[15px] text-white">
+          <input
+            type="checkbox"
+            checked={work}
+            onChange={(e) => setWork(e.target.checked)}
+            className="h-4 w-4 accent-emerald"
+          />
+          I’m travelling for work
+        </label>
+      ) : null}
     </form>
   );
 }
