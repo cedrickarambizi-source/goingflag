@@ -16,9 +16,8 @@ import {
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/hotels/")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    q: typeof search["q"] === "string" ? (search["q"] as string) : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { q?: string } =>
+    typeof search["q"] === "string" && search["q"] ? { q: search["q"] as string } : {},
   head: () => ({
     meta: [
       { title: "Stays — compare hotels, villas and lodges | GoingFlag" },
