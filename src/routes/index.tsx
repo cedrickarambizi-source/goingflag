@@ -329,39 +329,75 @@ function Home() {
 
       {/* Offers */}
       <section className="gf-shell gf-section">
-        <SectionHead index="Offers" title="Current offers" intro="No countdown timers. Terms stated plainly." />
-        <div className="mt-[30px] grid gap-5 md:grid-cols-3">
-          {OFFERS.map((o) => (
-            <Link key={o.slug} to={o.to} className="group block overflow-hidden rounded-2xl bg-sand">
-              <div className="gf-frame aspect-[16/10]">
-                <img src={photo(o.photoId, 800, 1.6)} alt={o.title} loading="lazy" />
-              </div>
-              <div className="p-5">
-                <p className="gf-sub">{o.title}</p>
+        <SectionHead index="Offers" title="Offers" intro="Promotions, deals and special offers for you." />
+        <div className="mt-[30px] grid gap-5 md:grid-cols-2">
+          {OFFERS.slice(0, 2).map((o) => (
+            <article
+              key={o.slug}
+              className="flex items-start justify-between gap-5 rounded-2xl border border-line bg-white p-5"
+            >
+              <div className="min-w-0">
+                <p className="gf-caption text-iron">Limited release</p>
+                <p className="gf-sub mt-2 text-[22px]">{o.title}</p>
                 <p className="gf-body mt-2 text-graphite">{o.copy}</p>
-                <p className="gf-caption mt-4 text-emerald">{o.cta} →</p>
+                <GfButtonLink to={o.to} className="mt-5 px-5 py-[10px]">
+                  {o.cta}
+                </GfButtonLink>
               </div>
-            </Link>
+              <div className="gf-frame h-[110px] w-[120px] shrink-0 rounded-xl">
+                <img src={photo(o.photoId, 400, 1.1)} alt={o.title} loading="lazy" />
+              </div>
+            </article>
           ))}
         </div>
       </section>
 
-      {/* Africa rail */}
+      {/* Explore nearby */}
       <section className="border-t border-line bg-white">
         <div className="gf-shell gf-section">
-          <SectionHead index="Africa" title="Close to home" action={<ArrowLink to="/destinations">Browse</ArrowLink>} />
-          <div className="gf-scroll-x mt-[30px]">
-            {AFRICA.map((a) => (
-              <Link key={a.name} to="/destinations" className="group w-[200px]">
-                <div className="gf-frame aspect-square rounded-2xl">
-                  <img src={photo(a.photoId, 500, 1)} alt={a.name} loading="lazy" />
+          <SectionHead
+            index="Explore"
+            title="Explore East Africa"
+            intro="These popular destinations have a lot to offer."
+            action={<ArrowLink to="/destinations">Browse</ArrowLink>}
+          />
+          <div className="gf-scroll-x mt-[30px] md:grid md:grid-cols-5 md:gap-4 md:overflow-visible">
+            {AFRICA.slice(0, 5).map((a) => (
+              <Link key={a.name} to="/destinations" className="group w-[200px] md:w-auto">
+                <div className="gf-frame aspect-[4/3] rounded-2xl">
+                  <img src={photo(a.photoId, 500, 1.33)} alt={a.name} loading="lazy" />
                 </div>
                 <p className="gf-sub mt-3">{a.name}</p>
+                <p className="gf-caption mt-1 text-iron">Stays · flights · days out</p>
               </Link>
             ))}
           </div>
         </div>
       </section>
+
+      {/* Account */}
+      <section className="gf-shell gf-section">
+        <SectionHead index="Account" title="Your account, your travel" />
+        <div className="mt-[30px] flex flex-wrap items-center justify-between gap-6 rounded-2xl border border-line bg-sand p-6">
+          <div>
+            <p className="gf-sub text-[22px]">All your trip details in one place</p>
+            <p className="gf-body mt-2 text-graphite">
+              Sign in to book faster, keep confirmations together and manage every reservation.
+            </p>
+            <div className="mt-5 flex flex-wrap items-center gap-3">
+              <GfButtonLink to="/signin" className="px-5 py-[10px]">
+                Sign in
+              </GfButtonLink>
+              <ArrowLink to="/trips">View my trips</ArrowLink>
+            </div>
+          </div>
+          <div className="gf-frame h-[120px] w-[180px] rounded-xl">
+            <img src={photo(PHOTO_IDS.kigaliHills, 400, 1.5)} alt="Kigali hills at dusk" loading="lazy" />
+          </div>
+        </div>
+      </section>
+
+
 
       {/* Recommendations */}
       <section className="gf-shell gf-section">
