@@ -23,7 +23,13 @@ export function HeroSearch() {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        navigate({ to: DESTINATIONS[tab].to });
+        const to = DESTINATIONS[tab].to;
+        const term = place.split(",")[0]?.trim() ?? "";
+        if (to === "/hotels" && term) {
+          navigate({ to, search: { q: term } });
+          return;
+        }
+        navigate({ to });
       }}
       className="gf-glass gf-shadow-lift rounded-3xl border border-white/40 p-4 md:p-5"
     >
