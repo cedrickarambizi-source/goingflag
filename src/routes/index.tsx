@@ -13,6 +13,7 @@ import {
 } from "@/lib/gf/data";
 import { AFRICA, DISCOVERY, OFFERS, PACKAGES, TRANSFER_FEATURES, TRUST } from "@/lib/gf/catalog";
 import { photo, PHOTO_IDS } from "@/lib/gf/photos";
+import heroVideo from "@/assets/goingflag-hero.mp4.asset.json";
 
 const HERO = photo(PHOTO_IDS.aerialCoast, 1920, 1.6);
 
@@ -44,12 +45,18 @@ function Home() {
     <>
       {/* Hero */}
       <section className="relative isolate overflow-hidden">
-        <img
-          src={HERO}
-          alt="Aerial view of an Indian Ocean coastline at golden hour"
-          loading="eager"
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          poster={HERO}
+          aria-label="Aerial travel footage"
           className="absolute inset-0 h-full w-full object-cover"
-        />
+        >
+          <source src={heroVideo.url} type="video/mp4" />
+        </video>
         <div
           aria-hidden="true"
           className="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,18,32,0.72),rgba(11,18,32,0.35)_45%,rgba(11,18,32,0.82))]"

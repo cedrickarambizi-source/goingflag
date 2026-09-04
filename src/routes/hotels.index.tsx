@@ -16,6 +16,8 @@ import {
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/hotels/")({
+  validateSearch: (search: Record<string, unknown>): { q?: string } =>
+    typeof search["q"] === "string" && search["q"] ? { q: search["q"] as string } : {},
   head: () => ({
     meta: [
       { title: "Stays — compare hotels, villas and lodges | GoingFlag" },
@@ -41,7 +43,8 @@ const maxNightly = Math.max(...hotels.map((h) => h.nightly));
 function HotelsIndex() {
   const cities = useMemo(() => Array.from(new Set(hotels.map((h) => h.destination))).sort(), []);
 
-  const [query, setQuery] = useState("");
+  const { q: initialQuery } = Route.useSearch();
+  const [query, setQuery] = useState(initialQuery ?? "");
   const [budget, setBudget] = useState(maxNightly);
   const [selectedCities, setSelectedCities] = useState<string[]>([]);
   const [types, setTypes] = useState<PropertyType[]>([]);
