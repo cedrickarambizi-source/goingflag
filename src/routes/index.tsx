@@ -13,6 +13,7 @@ import {
 } from "@/lib/gf/data";
 import { AFRICA, DISCOVERY, OFFERS, PACKAGES, TRANSFER_FEATURES, TRUST } from "@/lib/gf/catalog";
 import { photo, PHOTO_IDS } from "@/lib/gf/photos";
+import heroVideo from "@/assets/goingflag-hero.mp4.asset.json";
 
 const HERO = photo(PHOTO_IDS.aerialCoast, 1920, 1.6);
 
