@@ -76,7 +76,7 @@ export function SiteNav() {
                 aria-expanded={menu}
                 aria-haspopup="menu"
                 onClick={() => setMenu((v) => !v)}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-black text-[14px] font-medium"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/50 text-[14px] font-medium text-white"
                 title={user.email ?? "Account"}
               >
                 {initial}
@@ -115,14 +115,14 @@ export function SiteNav() {
               ) : null}
             </div>
           ) : (
-            <Link to="/signin" className="hidden text-[15px] text-graphite hover:text-black md:inline">
+            <Link to="/signin" className="hidden text-[15px] text-white/70 hover:text-white md:inline">
               Sign in
             </Link>
           )}
 
           <Link
             to="/destinations"
-            className="hidden rounded-full border border-black bg-black px-5 py-[9px] text-[15px] font-medium text-white md:inline-block"
+            className="hidden rounded-full bg-white px-5 py-[9px] text-[15px] font-medium text-ink transition-colors hover:bg-sand-deep md:inline-block"
           >
             Book
           </Link>
@@ -131,7 +131,7 @@ export function SiteNav() {
             aria-expanded={open}
             aria-controls="gf-mobile-nav"
             onClick={() => setOpen((v) => !v)}
-            className="gf-caption md:hidden"
+            className="gf-caption text-white md:hidden"
           >
             {open ? "Close" : "Menu"}
           </button>
@@ -139,7 +139,7 @@ export function SiteNav() {
       </div>
 
       {open ? (
-        <div id="gf-mobile-nav" className="border-t border-hairline bg-white md:hidden">
+        <div id="gf-mobile-nav" className="border-t border-white/15 bg-ink text-white md:hidden">
           <nav aria-label="Mobile" className="gf-shell flex flex-col py-[10px]">
             {[...LINKS, { to: "/trips", label: "Trips" }].map((l) => (
               <Link
