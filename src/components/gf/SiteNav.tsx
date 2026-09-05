@@ -40,11 +40,11 @@ export function SiteNav() {
 
 
   return (
-    <header className="sticky top-0 z-50 border-b border-black bg-white">
-      <div className="gf-shell grid h-[60px] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4 md:h-[68px]">
+    <header className="sticky top-0 z-50 bg-ink text-white">
+      <div className="gf-shell grid h-[60px] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4 md:h-[72px]">
         <Link to="/" className="flex shrink-0 items-center gap-2" aria-label="GoingFlag home">
           <img src={logoAsset.url} alt="GoingFlag Travel & Booking logo" className="h-8 w-8 object-contain" />
-          <span className="text-[15px] font-medium tracking-[0.14em]">GOINGFLAG</span>
+          <span className="text-[15px] font-medium tracking-[0.14em] text-white">GOINGFLAG</span>
         </Link>
 
 
@@ -53,8 +53,8 @@ export function SiteNav() {
             <Link
               key={l.to}
               to={l.to}
-              className="text-[15px] text-graphite transition-colors hover:text-black"
-              activeProps={{ className: "text-[15px] text-black" }}
+              className="text-[15px] text-white/70 transition-colors hover:text-white"
+              activeProps={{ className: "text-[15px] text-white" }}
             >
               {l.label}
             </Link>
@@ -62,7 +62,11 @@ export function SiteNav() {
         </nav>
 
         <div className="flex shrink-0 items-center gap-5">
-          <Link to="/trips" className="hidden text-[15px] text-graphite hover:text-black md:inline">
+          <span className="gf-caption hidden text-white/60 lg:inline">RWF · EN</span>
+          <Link to="/support" className="hidden text-[15px] text-white/70 hover:text-white lg:inline">
+            Help
+          </Link>
+          <Link to="/trips" className="hidden text-[15px] text-white/70 hover:text-white md:inline">
             Trips
           </Link>
           {loading ? null : user ? (
