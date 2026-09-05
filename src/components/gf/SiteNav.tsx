@@ -146,7 +146,7 @@ export function SiteNav() {
                 key={l.to}
                 to={l.to}
                 onClick={() => setOpen(false)}
-                className="border-b border-hairline py-4 text-[20px] font-medium last:border-0"
+                className="border-b border-white/15 py-4 text-[20px] font-medium last:border-0"
               >
                 {l.label}
               </Link>
