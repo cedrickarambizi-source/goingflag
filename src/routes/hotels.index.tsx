@@ -53,6 +53,9 @@ function HotelsIndex() {
   const [minScore, setMinScore] = useState(0);
   const [sort, setSort] = useState<SortId>("best");
   const [saved, setSaved] = useState<string[]>([]);
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  const [guests, setGuests] = useState(2);
 
   function toggle<T>(list: T[], value: T, set: (next: T[]) => void) {
     set(list.includes(value) ? list.filter((v) => v !== value) : [...list, value]);
@@ -96,16 +99,77 @@ function HotelsIndex() {
   }
 
   return (
-    <div className="gf-shell gf-section">
-      <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Stays" }]} />
+    <>
+      {/* ------------------------------------------- Search band (results header) */}
+      <section className="bg-ink pb-8 pt-7">
+        <div className="gf-shell">
+          <p className="gf-caption text-white/60">Search stays</p>
+          <div className="mt-3 rounded-2xl bg-gold p-[3px]">
+            <div className="flex flex-col gap-[3px] md:flex-row">
+              <label className="min-w-0 flex-[1.5] rounded-xl bg-white px-4 py-3 focus-within:ring-2 focus-within:ring-emerald">
+                <span className="gf-caption text-iron">Where to</span>
+                <input
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="City or property"
+                  aria-label="Where to"
+                  className="mt-1 w-full bg-transparent text-[15px] font-medium text-ink placeholder:text-smoke focus:outline-none"
+                />
+              </label>
+              <label className="min-w-0 flex-1 rounded-xl bg-white px-4 py-3 focus-within:ring-2 focus-within:ring-emerald">
+                <span className="gf-caption text-iron">Check in</span>
+                <input
+                  type="date"
+                  value={checkIn}
+                  onChange={(e) => setCheckIn(e.target.value)}
+                  className="gf-nums mt-1 w-full bg-transparent text-[15px] font-medium text-ink focus:outline-none"
+                />
+              </label>
+              <label className="min-w-0 flex-1 rounded-xl bg-white px-4 py-3 focus-within:ring-2 focus-within:ring-emerald">
+                <span className="gf-caption text-iron">Check out</span>
+                <input
+                  type="date"
+                  value={checkOut}
+                  onChange={(e) => setCheckOut(e.target.value)}
+                  className="gf-nums mt-1 w-full bg-transparent text-[15px] font-medium text-ink focus:outline-none"
+                />
+              </label>
+              <label className="min-w-0 rounded-xl bg-white px-4 py-3 md:max-w-[170px] focus-within:ring-2 focus-within:ring-emerald">
+                <span className="gf-caption text-iron">Guests</span>
+                <input
+                  type="number"
+                  min={1}
+                  max={20}
+                  value={guests}
+                  onChange={(e) => setGuests(Number(e.target.value))}
+                  className="gf-nums mt-1 w-full bg-transparent text-[15px] font-medium text-ink focus:outline-none"
+                />
+              </label>
+              <button
+                type="button"
+                onClick={() => setSort("best")}
+                className="gf-sub rounded-xl bg-emerald px-8 py-4 text-white transition-colors hover:bg-ink md:min-w-[140px]"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+          <p className="gf-body mt-4 text-white/70">
+            {results.length} of {stayResults.length} properties · free cancellation on selected rates
+          </p>
+        </div>
+      </section>
 
-      <header className="mt-[30px]">
-        <h1 className="gf-heading">Stays</h1>
-        <p className="gf-body mt-3 text-graphite">
-          {results.length} of {stayResults.length} properties · rates per night for two adults, taxes
-          included, one total at checkout.
-        </p>
-      </header>
+      <div className="gf-shell gf-section">
+        <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Stays" }]} />
+
+        <header className="mt-[30px]">
+          <h1 className="gf-heading">Stays</h1>
+          <p className="gf-body mt-3 text-graphite">
+            Rates per night for two adults, taxes included, one total at checkout.
+          </p>
+        </header>
+
 
       <div className="mt-[30px] grid gap-[30px] lg:grid-cols-[280px_minmax(0,1fr)] lg:gap-[40px]">
         {/* -------------------------------------------------- Filter sidebar */}
@@ -413,7 +477,8 @@ function HotelsIndex() {
           )}
         </section>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
 

@@ -40,11 +40,11 @@ export function SiteNav() {
 
 
   return (
-    <header className="sticky top-0 z-50 border-b border-black bg-white">
-      <div className="gf-shell grid h-[60px] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4 md:h-[68px]">
+    <header className="sticky top-0 z-50 bg-ink text-white">
+      <div className="gf-shell grid h-[60px] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4 md:h-[72px]">
         <Link to="/" className="flex shrink-0 items-center gap-2" aria-label="GoingFlag home">
           <img src={logoAsset.url} alt="GoingFlag Travel & Booking logo" className="h-8 w-8 object-contain" />
-          <span className="text-[15px] font-medium tracking-[0.14em]">GOINGFLAG</span>
+          <span className="text-[15px] font-medium tracking-[0.14em] text-white">GOINGFLAG</span>
         </Link>
 
 
@@ -53,8 +53,8 @@ export function SiteNav() {
             <Link
               key={l.to}
               to={l.to}
-              className="text-[15px] text-graphite transition-colors hover:text-black"
-              activeProps={{ className: "text-[15px] text-black" }}
+              className="text-[15px] text-white/70 transition-colors hover:text-white"
+              activeProps={{ className: "text-[15px] text-white" }}
             >
               {l.label}
             </Link>
@@ -62,7 +62,11 @@ export function SiteNav() {
         </nav>
 
         <div className="flex shrink-0 items-center gap-5">
-          <Link to="/trips" className="hidden text-[15px] text-graphite hover:text-black md:inline">
+          <span className="gf-caption hidden text-white/60 lg:inline">RWF · EN</span>
+          <Link to="/support" className="hidden text-[15px] text-white/70 hover:text-white lg:inline">
+            Help
+          </Link>
+          <Link to="/trips" className="hidden text-[15px] text-white/70 hover:text-white md:inline">
             Trips
           </Link>
           {loading ? null : user ? (
@@ -72,7 +76,7 @@ export function SiteNav() {
                 aria-expanded={menu}
                 aria-haspopup="menu"
                 onClick={() => setMenu((v) => !v)}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-black text-[14px] font-medium"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/50 text-[14px] font-medium text-white"
                 title={user.email ?? "Account"}
               >
                 {initial}
@@ -111,14 +115,14 @@ export function SiteNav() {
               ) : null}
             </div>
           ) : (
-            <Link to="/signin" className="hidden text-[15px] text-graphite hover:text-black md:inline">
+            <Link to="/signin" className="hidden text-[15px] text-white/70 hover:text-white md:inline">
               Sign in
             </Link>
           )}
 
           <Link
             to="/destinations"
-            className="hidden rounded-full border border-black bg-black px-5 py-[9px] text-[15px] font-medium text-white md:inline-block"
+            className="hidden rounded-full bg-white px-5 py-[9px] text-[15px] font-medium text-ink transition-colors hover:bg-sand-deep md:inline-block"
           >
             Book
           </Link>
@@ -127,7 +131,7 @@ export function SiteNav() {
             aria-expanded={open}
             aria-controls="gf-mobile-nav"
             onClick={() => setOpen((v) => !v)}
-            className="gf-caption md:hidden"
+            className="gf-caption text-white md:hidden"
           >
             {open ? "Close" : "Menu"}
           </button>
@@ -135,14 +139,14 @@ export function SiteNav() {
       </div>
 
       {open ? (
-        <div id="gf-mobile-nav" className="border-t border-hairline bg-white md:hidden">
+        <div id="gf-mobile-nav" className="border-t border-white/15 bg-ink text-white md:hidden">
           <nav aria-label="Mobile" className="gf-shell flex flex-col py-[10px]">
             {[...LINKS, { to: "/trips", label: "Trips" }].map((l) => (
               <Link
                 key={l.to}
                 to={l.to}
                 onClick={() => setOpen(false)}
-                className="border-b border-hairline py-4 text-[20px] font-medium last:border-0"
+                className="border-b border-white/15 py-4 text-[20px] font-medium last:border-0"
               >
                 {l.label}
               </Link>
