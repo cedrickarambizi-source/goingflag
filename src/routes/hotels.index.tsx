@@ -53,6 +53,9 @@ function HotelsIndex() {
   const [minScore, setMinScore] = useState(0);
   const [sort, setSort] = useState<SortId>("best");
   const [saved, setSaved] = useState<string[]>([]);
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  const [guests, setGuests] = useState(2);
 
   function toggle<T>(list: T[], value: T, set: (next: T[]) => void) {
     set(list.includes(value) ? list.filter((v) => v !== value) : [...list, value]);
@@ -474,7 +477,8 @@ function HotelsIndex() {
           )}
         </section>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
 
