@@ -5,8 +5,14 @@
 
 import type { LiveHotel, LiveRate, StaySearchInput } from "./hotelbeds.types";
 
-const BOOKING_BASE = "https://api.hotelbeds.com/hotel-api/3.0";
-const CONTENT_BASE = "https://api.hotelbeds.com/hotel-content-api/1.0";
+/** "production" (api.hotelbeds.com) or "test" (api.test.hotelbeds.com), from HOTELBEDS_ENV. */
+function host() {
+  return (process.env["HOTELBEDS_ENV"] ?? "production").toLowerCase() === "test"
+    ? "https://api.test.hotelbeds.com"
+    : "https://api.hotelbeds.com";
+}
+const bookingBase = () => `${host()}/hotel-api/3.0`;
+const contentBase = () => `${host()}/hotel-content-api/1.0`;
 const IMAGE_BASE = "https://photos.hotelbeds.com/giata/bigger/";
 
 async function sha256Hex(input: string) {
