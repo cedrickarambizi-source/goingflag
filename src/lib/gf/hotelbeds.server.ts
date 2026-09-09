@@ -60,7 +60,7 @@ async function destinations() {
   for (let page = 0; page < 6; page += 1) {
     const from = page * 1000 + 1;
     const data = await call<{ destinations?: RawDestination[] }>(
-      `${CONTENT_BASE}/locations/destinations?language=ENG&fields=all&from=${from}&to=${from + 999}`,
+      `${contentBase()}/locations/destinations?language=ENG&fields=all&from=${from}&to=${from + 999}`,
     );
     const chunk = data.destinations ?? [];
     for (const d of chunk) {
@@ -114,7 +114,7 @@ async function contentFor(codes: string[]) {
     const chunk = codes.slice(i, i + 60);
     try {
       const data = await call<{ hotels?: RawContentHotel[] }>(
-        `${CONTENT_BASE}/hotels?codes=${chunk.join(",")}&language=ENG&fields=all&from=1&to=${chunk.length}&useSecondaryLanguage=false`,
+        `${contentBase()}/hotels?codes=${chunk.join(",")}&language=ENG&fields=all&from=1&to=${chunk.length}&useSecondaryLanguage=false`,
       );
       for (const h of data.hotels ?? []) map.set(String(h.code), h);
     } catch (error) {
@@ -235,7 +235,7 @@ function mapHotel(raw: RawAvailHotel, content: RawContentHotel | undefined, nigh
 }
 
 async function availability(body: Record<string, unknown>) {
-  return call<AvailResponse>(`${BOOKING_BASE}/hotels`, { method: "POST", body: JSON.stringify(body) });
+  return call<AvailResponse>(`${bookingBase()}/hotels`, { method: "POST", body: JSON.stringify(body) });
 }
 
 function occupancy(input: StaySearchInput) {
