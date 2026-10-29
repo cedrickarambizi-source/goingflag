@@ -322,9 +322,13 @@ function HotelDetail() {
           </dl>
 
           <div className="mt-[30px]">
-            <GfButtonLink to="/hotels" search={backSearch} variant="secondary">
+            <Link
+              to="/hotels"
+              search={backSearch}
+              className="gf-caption inline-flex rounded-full border border-ink px-5 py-3 transition-colors hover:bg-ink hover:text-white"
+            >
               Change search
-            </GfButtonLink>
+            </Link>
           </div>
         </aside>
       </div>
