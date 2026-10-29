@@ -370,3 +370,29 @@ function Shell({
 }
 
 type LiveHotelRef = LiveHotel;
+
+function Notice({
+  title,
+  body,
+  action,
+}: {
+  title: string;
+  body: string;
+  action?: { label: string; onClick: () => void };
+}) {
+  return (
+    <div className="mt-[30px] rounded-3xl border border-line bg-white p-[30px]" role="status">
+      <p className="gf-sub">{title}</p>
+      <p className="gf-body mt-3 text-graphite">{body}</p>
+      {action ? (
+        <button
+          type="button"
+          onClick={action.onClick}
+          className="gf-caption mt-5 rounded-full border border-ink px-5 py-3 transition-colors hover:bg-ink hover:text-white"
+        >
+          {action.label}
+        </button>
+      ) : null}
+    </div>
+  );
+}

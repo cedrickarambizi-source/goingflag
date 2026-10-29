@@ -108,7 +108,7 @@ function DestinationDetail() {
 
         <div className="mt-[30px] flex flex-wrap gap-[10px]">
           <GfButtonLink to="/flights">Flights to {d.name}</GfButtonLink>
-          <GfButtonLink to="/hotels" search={{ destination: d.name }} variant="secondary">
+          <GfButtonLink to="/hotels" variant="secondary">
             Stays in {d.name}
           </GfButtonLink>
         </div>

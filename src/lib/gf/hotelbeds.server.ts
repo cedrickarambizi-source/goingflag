@@ -280,7 +280,7 @@ export async function hotelAvailability(code: string, input: StaySearchInput) {
     const only = content.get(code);
     if (!only) return { hotel: null, available: false };
     return {
-      hotel: mapHotel({ code: Number(code), name: only.name?.content }, only, nights),
+      hotel: mapHotel({ code: Number(code), name: only.name?.content ?? "" }, only, nights),
       available: false,
     };
   }
