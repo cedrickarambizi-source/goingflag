@@ -140,14 +140,14 @@ function Home() {
           <div className="mt-[30px] grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {hotels.slice(0, 8).map((h) => (
               <article key={h.slug} className="gf-shadow flex flex-col rounded-2xl bg-white p-3">
-                <Link to="/hotels/$slug" params={{ slug: h.slug }} className="group block">
+                <Link to="/hotels" search={{ destination: h.destination }} className="group block">
                   <div className="gf-frame aspect-[4/3] rounded-xl">
                     <img src={photo(h.photoId, 800, 1.33)} alt={h.name} loading="lazy" />
                   </div>
                 </Link>
                 <div className="mt-4 flex flex-1 flex-col px-1 pb-1">
                   <Stars count={h.stars} />
-                  <Link to="/hotels/$slug" params={{ slug: h.slug }} className="gf-sub mt-2 hover:underline">
+                  <Link to="/hotels" search={{ destination: h.destination }} className="gf-sub mt-2 hover:underline">
                     {h.name}
                   </Link>
                   <p className="gf-body mt-1 text-graphite">
