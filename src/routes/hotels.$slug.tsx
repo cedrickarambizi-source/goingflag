@@ -378,7 +378,7 @@ function Notice({
 }: {
   title: string;
   body: string;
-  action?: { label: string; onClick: () => void };
+  action?: { label: string; onClick: () => void } | undefined;
 }) {
   return (
     <div className="mt-[30px] rounded-3xl border border-line bg-white p-[30px]" role="status">
