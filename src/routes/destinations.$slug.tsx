@@ -120,7 +120,7 @@ function DestinationDetail() {
             <SectionHead title={`Where to stay in ${d.name}`} />
             <div className="mt-[30px] grid gap-[30px] sm:grid-cols-2 lg:grid-cols-3">
               {stays.map((h) => (
-                <Link key={h.slug} to="/hotels/$slug" params={{ slug: h.slug }} className="group block">
+                <Link key={h.slug} to="/hotels" search={{ destination: d.name }} className="group block">
                   <div className="gf-frame aspect-[3/2]">
                     <img src={photo(h.photoId, 800, 1.5)} alt={h.name} loading="lazy" />
                   </div>

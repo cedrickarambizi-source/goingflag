@@ -37,7 +37,7 @@ export function HeroSearch() {
         const to = DESTINATIONS[tab].to;
         const term = place.split(",")[0]?.trim() ?? "";
         if (to === "/hotels" && term) {
-          navigate({ to, search: { q: term } });
+          navigate({ to, search: { destination: term } });
           return;
         }
         navigate({ to });
