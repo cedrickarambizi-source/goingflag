@@ -24,6 +24,7 @@ export function HeroSearch() {
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const [travellers, setTravellers] = useState(2);
+  const [children, setChildren] = useState(0);
   const [rooms, setRooms] = useState(1);
   const [work, setWork] = useState(false);
   const [trip, setTrip] = useState<"one-way" | "return">("one-way");
@@ -37,7 +38,7 @@ export function HeroSearch() {
         const to = DESTINATIONS[tab].to;
         const term = place.split(",")[0]?.trim() ?? "";
         if (to === "/hotels" && term) {
-          navigate({ to, search: { destination: term } });
+          navigate({ to, search: { destination: term, checkIn: start, checkOut: end, adults: travellers, children, rooms } });
           return;
         }
         navigate({ to });
@@ -149,7 +150,7 @@ export function HeroSearch() {
                 aria-label="Travellers"
                 className={cn(field, "gf-nums w-12")}
               />
-              <span className="gf-body text-graphite">{isTransfer ? "passengers" : "guests"}</span>
+              <span className="gf-body text-graphite">{isTransfer ? "passengers" : tab === "stays" ? "adults" : "guests"}</span>
               {!isTransfer && tab === "stays" ? (
                 <>
                   <span className="text-iron">·</span>
@@ -167,6 +168,13 @@ export function HeroSearch() {
               ) : null}
             </div>
           </div>
+
+          {tab === "stays" ? (
+            <label className={cell}>
+              <span className={labelText}>Children</span>
+              <input type="number" min={0} max={6} value={children} onChange={(e) => setChildren(Number(e.target.value))} aria-label="Children" className={cn(field, "gf-nums mt-1")} />
+            </label>
+          ) : null}
 
           <button
             type="submit"

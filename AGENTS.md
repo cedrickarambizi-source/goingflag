@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Hotelbeds checkout carries the full rate key, ISO currency, exact supplier total and occupancy; supplier totals must not be multiplied by nights or receive invented taxes.
+- Local reservation insertion cannot confirm Hotelbeds inventory; block supplier-stay creation until supplier booking and payment handling are implemented.

@@ -14,6 +14,8 @@ export const Route = createFileRoute("/booking/$reference")({
       { property: "og:title", content: "Booking confirmation — GoingFlag" },
       { property: "og:description", content: "Reservation details and cancellation terms." },
       { name: "robots", content: "noindex" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: BookingConfirmation,
@@ -85,14 +87,13 @@ function BookingConfirmation() {
                 <Row label="Email" value={data.lead_email} />
                 <div className="flex items-baseline justify-between gap-4 border-t border-line pt-4">
                   <dt className="gf-caption text-iron">Total</dt>
-                  <dd className="gf-nums gf-sub">{money(data.total_cents)}</dd>
+                  <dd className="gf-nums gf-sub">{money(data.total_cents, data.currency)}</dd>
                 </div>
               </dl>
             </div>
 
             <p className="gf-body mt-[30px] text-graphite">
-              A copy of these details sits in your trips. Free cancellation applies until 48 hours
-              before the start date; after that the supplier's terms apply.
+              These details are saved in your trips. This GoingFlag reference is not a supplier confirmation; contact GoingFlag to confirm availability, payment and cancellation terms.
             </p>
 
             <div className="mt-[30px] flex flex-wrap gap-[10px]">

@@ -23,6 +23,8 @@ const SECTIONS = [
 export const Route = createFileRoute("/legal")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "Legal — GoingFlag" },
       {
         name: "description",

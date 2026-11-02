@@ -5,7 +5,7 @@ import { Breadcrumbs, GfButton, SectionHead } from "@/components/gf/ui";
 const FAQS = [
   {
     q: "Is the price I see the price I pay?",
-    a: "Yes. Fares include taxes and fees for one adult, and room rates include local taxes for two adults.",
+    a: "Hotel totals are quoted for your selected dates and guests. Additional property charges, if any, must be confirmed with the supplier; test availability is not a confirmed booking.",
   },
   {
     q: "Can I change a booking?",
@@ -17,13 +17,15 @@ const FAQS = [
   },
   {
     q: "Which currency are prices in?",
-    a: "US dollars. Your card issuer sets the conversion rate if you pay in another currency.",
+    a: "Hotel prices use the supplier’s quoted currency, shown beside every total. No currency conversion is applied at checkout.",
   },
 ];
 
 export const Route = createFileRoute("/support")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "Support — GoingFlag" },
       {
         name: "description",

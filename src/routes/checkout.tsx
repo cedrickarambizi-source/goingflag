@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useMemo, useState } from "react";
 import { Breadcrumbs, GfButton, GfButtonLink, SectionHead } from "@/components/gf/ui";
-import { checkoutSearchSchema, formatDollars } from "@/lib/gf/booking";
+import { checkoutSearchSchema, checkoutTotals, formatCurrency, isSupplierStay } from "@/lib/gf/booking";
 import { createReservation } from "@/lib/gf/reservations.functions";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -18,6 +18,8 @@ export const Route = createFileRoute("/checkout")({
       { property: "og:title", content: "Checkout — GoingFlag" },
       { property: "og:description", content: "Review, add traveller details, confirm." },
       { name: "robots", content: "noindex" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Checkout,
@@ -42,12 +44,12 @@ function Checkout() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const subtotal = search.price * quantity;
-  const taxes = Math.round(subtotal * 0.08);
-  const total = subtotal + taxes;
+  const supplierStay = isSupplierStay(search.kind, search.slug, search.rateKey);
+  const { subtotal, taxes, total } = checkoutTotals(search.price, quantity, supplierStay);
+  const priceLabel = (value: number) => formatCurrency(value, search.currency);
   const unitLabel = useMemo(
-    () => (NIGHT_KINDS.has(search.kind) ? "night" : search.unit || "item"),
-    [search.kind, search.unit],
+    () => (supplierStay ? "stay" : NIGHT_KINDS.has(search.kind) ? "night" : search.unit || "item"),
+    [search.kind, search.unit, supplierStay],
   );
 
   if (!search.title) {
@@ -70,6 +72,10 @@ function Checkout() {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+    if (supplierStay) {
+      setError("Hotel booking is not yet available. No room has been reserved and no payment has been taken.");
+      return;
+    }
     setError(null);
     setBusy(true);
     try {
@@ -85,6 +91,8 @@ function Checkout() {
           travellers,
           quantity,
           unitPriceCents: Math.round(search.price * 100),
+          currency: search.currency,
+          rateKey: search.rateKey,
           leadName: name,
           leadEmail: email,
           leadPhone: phone || null,
@@ -107,8 +115,8 @@ function Checkout() {
         <div>
           <SectionHead
             index="Step 1 — Details"
-            title="Confirm your booking"
-            intro="Everything below is shown as a single total. No fees appear later."
+            title={supplierStay ? "Review your room" : "Confirm your booking"}
+            intro={supplierStay ? "Hotelbeds test availability only. Production booking and payment are not available yet; no room is reserved." : "Review your selection and traveller details."}
           />
 
           {loading ? (
@@ -160,6 +168,7 @@ function Checkout() {
                 <Field label="Travellers" htmlFor="ck-travellers">
                   <input
                     id="ck-travellers"
+                    disabled={supplierStay}
                     type="number"
                     min={1}
                     max={20}
@@ -171,6 +180,7 @@ function Checkout() {
                 <Field label={search.kind === "stay" ? "Check in" : "Date"} htmlFor="ck-start">
                   <input
                     id="ck-start"
+                    disabled={supplierStay}
                     type="date"
                     value={start}
                     onChange={(e) => setStart(e.target.value)}
@@ -181,6 +191,7 @@ function Checkout() {
                   <Field label="Check out" htmlFor="ck-end">
                     <input
                       id="ck-end"
+                      disabled={supplierStay}
                       type="date"
                       value={end}
                       onChange={(e) => setEnd(e.target.value)}
@@ -191,6 +202,7 @@ function Checkout() {
                 <Field label={`Number of ${unitLabel}s`} htmlFor="ck-qty">
                   <input
                     id="ck-qty"
+                    disabled={supplierStay}
                     type="number"
                     min={1}
                     max={60}
@@ -219,16 +231,15 @@ function Checkout() {
               ) : null}
 
               <div className="flex flex-wrap items-center gap-[10px]">
-                <GfButton type="submit" disabled={busy}>
-                  {busy ? "Confirming…" : `Confirm — ${formatDollars(total)}`}
+                <GfButton type="submit" disabled={busy || supplierStay}>
+                  {supplierStay ? "Booking not available yet" : busy ? "Confirming…" : `Confirm — ${priceLabel(total)}`}
                 </GfButton>
                 <Link to="/hotels" className="gf-body text-graphite underline underline-offset-4">
                   Keep browsing
                 </Link>
               </div>
               <p className="gf-body text-graphite">
-                Payment is collected by the supplier at the property or on the day. Free cancellation
-                terms are shown on your confirmation.
+                {supplierStay ? "No payment has been taken. Your room and price are not guaranteed until the supplier confirms a booking." : "No online payment is collected here. Contact GoingFlag to confirm payment arrangements and the supplier’s cancellation terms."}
               </p>
             </form>
           )}
@@ -246,13 +257,15 @@ function Checkout() {
           {search.location ? <p className="gf-body mt-1 text-graphite">{search.location}</p> : null}
 
           <dl className="mt-[30px] space-y-3 border-t border-line pt-5">
-            <Row label={`${formatDollars(search.price)} × ${quantity} ${unitLabel}${quantity > 1 ? "s" : ""}`} value={formatDollars(subtotal)} />
-            <Row label="Taxes and charges" value={formatDollars(taxes)} />
+            <Row label={supplierStay ? "Quoted stay total" : `${priceLabel(search.price)} × ${quantity} ${unitLabel}${quantity > 1 ? "s" : ""}`} value={priceLabel(subtotal)} />
+            {!supplierStay && taxes > 0 ? <Row label="Taxes and charges" value={priceLabel(taxes)} /> : null}
             <Row label="Travellers" value={String(travellers)} />
+            {supplierStay ? <Row label="Rooms" value={String(search.rooms ?? 1)} /> : null}
+            {search.cancellation ? <Row label="Cancellation" value={search.cancellation} /> : null}
           </dl>
           <div className="mt-5 flex items-baseline justify-between border-t border-line pt-5">
             <span className="gf-caption text-iron">Total</span>
-            <span className="gf-nums gf-sub">{formatDollars(total)}</span>
+            <span className="gf-nums gf-sub">{priceLabel(total)}</span>
           </div>
         </aside>
       </div>

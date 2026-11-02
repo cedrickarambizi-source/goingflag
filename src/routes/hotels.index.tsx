@@ -64,7 +64,7 @@ const SORTS = [
 type SortId = (typeof SORTS)[number]["id"];
 
 function money(amount: number, currency: string) {
-  return `${currency} ${amount.toLocaleString("en-US", { maximumFractionDigits: 0 })}`;
+  return `${currency} ${amount.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
 function tomorrow(offsetDays: number) {
@@ -490,7 +490,13 @@ function HotelCard({
                   title: `${h.name} — ${cheapest.roomName}`,
                   location: [h.destinationName, h.countryCode].filter(Boolean).join(", "),
                   ...(h.image ? { image: h.image } : {}),
-                  price: Math.round(cheapest.net),
+                  price: cheapest.sellingRate ?? cheapest.net,
+                  currency: cheapest.currency,
+                  rateKey: cheapest.rateKey,
+                  adults: params.adults,
+                  children: params.children,
+                  rooms: params.rooms,
+                  cancellation: cheapest.cancellationNote ?? undefined,
                   unit: `${h.nights} night stay (${h.currency})`,
                   start: params.checkIn,
                   end: params.checkOut,

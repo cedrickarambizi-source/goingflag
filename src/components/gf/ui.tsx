@@ -135,6 +135,12 @@ export type CheckoutDraft = {
   end?: string;
   travellers?: number;
   quantity?: number;
+  currency?: string;
+  rateKey?: string;
+  adults?: number;
+  children?: number;
+  rooms?: number;
+  cancellation?: string | undefined;
 };
 
 export function CheckoutLink({
@@ -151,7 +157,7 @@ export function CheckoutLink({
   return (
     <Link
       to="/checkout"
-      search={{ travellers: 1, quantity: 1, ...draft }}
+      search={{ travellers: 1, quantity: 1, currency: "USD", ...draft }}
       className={cn(buttonBase, buttonVariants[variant], className)}
     >
 

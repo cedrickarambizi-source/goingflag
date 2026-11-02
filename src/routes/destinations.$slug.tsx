@@ -27,11 +27,13 @@ export const Route = createFileRoute("/destinations/$slug")({
     const d = loaderData.destination;
     const title = `${d.name}, ${d.country} — GoingFlag`;
     const description = d.intro;
-    const image = photo(d.photoId, 1600, 1.9);
+    const image = photo(d.photoId, 1800, 1.78);
     return {
       meta: [
         { title },
         { name: "description", content: description },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
         { property: "og:title", content: title },
         { property: "og:description", content: description },
         { property: "og:image", content: image },

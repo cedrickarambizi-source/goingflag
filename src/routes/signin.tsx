@@ -8,6 +8,8 @@ import { useAuth } from "@/hooks/useAuth";
 export const Route = createFileRoute("/signin")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "Sign in — GoingFlag" },
       {
         name: "description",
