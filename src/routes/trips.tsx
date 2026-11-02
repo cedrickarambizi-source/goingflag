@@ -16,6 +16,8 @@ export const Route = createFileRoute("/trips")({
       },
       { property: "og:title", content: "Your trips — GoingFlag" },
       { property: "og:description", content: "Review reservations, terms and cancellations." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Trips,
@@ -104,7 +106,7 @@ function Trips() {
                 </p>
               </div>
               <div className="flex items-center gap-4 sm:flex-col sm:items-end">
-                <span className="gf-nums gf-sub">{money(r.total_cents)}</span>
+                <span className="gf-nums gf-sub">{money(r.total_cents, r.currency)}</span>
                 {r.status === "cancelled" ? null : (
                   <GfButton
                     variant="quiet"

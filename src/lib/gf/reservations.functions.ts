@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { isSupplierStay } from "./booking";
 
 const createInput = z.object({
   kind: z.enum(["stay", "flight", "experience", "transfer", "car", "package"]),
@@ -17,6 +18,8 @@ const createInput = z.object({
   leadEmail: z.string().email().max(160),
   leadPhone: z.string().max(40).optional().nullable(),
   notes: z.string().max(600).optional().nullable(),
+  currency: z.string().regex(/^[A-Z]{3}$/).default("USD"),
+  rateKey: z.string().max(2000).optional(),
 });
 
 export type CreateReservationInput = z.infer<typeof createInput>;
@@ -35,6 +38,9 @@ export const createReservation = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => createInput.parse(data))
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
+    if (isSupplierStay(data.kind, data.itemSlug, data.rateKey)) {
+      throw new Error("Hotel booking is not yet available. No room has been reserved and no payment has been taken.");
+    }
     const total = data.unitPriceCents * data.quantity;
 
     let lastError: string | null = null;
@@ -56,7 +62,7 @@ export const createReservation = createServerFn({ method: "POST" })
           quantity: data.quantity,
           unit_price_cents: data.unitPriceCents,
           total_cents: total,
-          currency: "USD",
+          currency: data.currency,
           status: "confirmed",
           lead_name: data.leadName,
           lead_email: data.leadEmail,
