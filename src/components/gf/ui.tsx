@@ -135,6 +135,12 @@ export type CheckoutDraft = {
   end?: string;
   travellers?: number;
   quantity?: number;
+  currency?: string;
+  rateKey?: string;
+  adults?: number;
+  children?: number;
+  rooms?: number;
+  cancellation?: string;
 };
 
 export function CheckoutLink({

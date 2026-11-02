@@ -55,7 +55,7 @@ export const Route = createFileRoute("/hotels/$slug")({
 });
 
 function money(amount: number, currency: string) {
-  return `${currency} ${amount.toLocaleString("en-US", { maximumFractionDigits: 0 })}`;
+  return `${currency} ${amount.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
 function HotelDetail() {
@@ -256,7 +256,7 @@ function HotelDetail() {
                           <div className="flex items-center gap-5">
                             <div className="text-right">
                               <p className="gf-nums text-[17px] text-ink">
-                                {money(rate.net, rate.currency)}
+                                {money(rate.sellingRate ?? rate.net, rate.currency)}
                               </p>
                               <p className="gf-caption text-iron">
                                 {hotel.nights} night{hotel.nights > 1 ? "s" : ""} total
@@ -271,7 +271,13 @@ function HotelDetail() {
                                   .filter(Boolean)
                                   .join(", "),
                                 ...(hotel.image ? { image: hotel.image } : {}),
-                                price: Math.round(rate.net),
+                                price: rate.sellingRate ?? rate.net,
+                                currency: rate.currency,
+                                rateKey: rate.rateKey,
+                                adults: params.adults,
+                                children: params.children,
+                                rooms: params.rooms,
+                                cancellation: rate.cancellationNote ?? undefined,
                                 unit: `${hotel.nights} night stay (${rate.currency})`,
                                 start: params.checkIn,
                                 end: params.checkOut,
