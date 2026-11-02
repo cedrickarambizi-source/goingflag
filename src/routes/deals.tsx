@@ -5,6 +5,8 @@ import { flightDeals, money } from "@/lib/gf/data";
 export const Route = createFileRoute("/deals")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "Deals — GoingFlag" },
       {
         name: "description",

@@ -6,6 +6,8 @@ import { photo, PHOTO_IDS } from "@/lib/gf/photos";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "About GoingFlag — Travel, edited from Kigali" },
       {
         name: "description",
@@ -17,8 +19,8 @@ export const Route = createFileRoute("/about")({
         property: "og:description",
         content: "A travel platform built in Kigali: honest totals, real photography, no urgency tactics.",
       },
-      { property: "og:image", content: photo(PHOTO_IDS.kigaliHills, 1600, 1.9) },
-      { name: "twitter:image", content: photo(PHOTO_IDS.kigaliHills, 1600, 1.9) },
+      { property: "og:image", content: photo(PHOTO_IDS.kigaliHills, 1400, 1.5) },
+      { name: "twitter:image", content: photo(PHOTO_IDS.kigaliHills, 1400, 1.5) },
     ],
   }),
   component: About,

@@ -6,6 +6,8 @@ import { photo } from "@/lib/gf/photos";
 export const Route = createFileRoute("/experiences")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "Experiences — GoingFlag" },
       {
         name: "description",
