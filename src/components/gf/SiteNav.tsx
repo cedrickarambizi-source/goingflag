@@ -2,6 +2,9 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import logoAsset from "@/assets/goingflag-logo.png.asset.json";
 import { useAuth } from "@/hooks/useAuth";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { getAdminAccess } from "@/lib/gf/admin.functions";
 
 
 
@@ -19,6 +22,9 @@ export function SiteNav() {
   const menuRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
   const { user, loading, signOut } = useAuth();
+  const queryClient = useQueryClient();
+  const checkAdmin = useServerFn(getAdminAccess);
+  const access = useQuery({ queryKey: ["admin-access", user?.id], queryFn: () => checkAdmin(), enabled: Boolean(user), retry: false });
 
   useEffect(() => {
     if (!menu) return;
@@ -32,8 +38,10 @@ export function SiteNav() {
   async function handleSignOut() {
     setMenu(false);
     setOpen(false);
+    await queryClient.cancelQueries();
+    queryClient.clear();
     await signOut();
-    navigate({ to: "/" });
+    navigate({ to: "/signin", replace: true });
   }
 
   const initial = (user?.email ?? "?").charAt(0).toUpperCase();
@@ -87,6 +95,7 @@ export function SiteNav() {
                   className="absolute right-0 mt-3 w-60 rounded-2xl border border-line bg-white p-2"
                 >
                   <p className="gf-caption truncate px-3 py-2 text-iron">{user.email}</p>
+                  {access.data?.isAdmin ? <Link role="menuitem" to="/admin" onClick={() => setMenu(false)} className="block rounded-lg px-3 py-2 text-[15px] text-ink hover:bg-sand">Admin dashboard</Link> : null}
                   <Link
                     role="menuitem"
                     to="/trips"
@@ -152,6 +161,8 @@ export function SiteNav() {
               </Link>
             ))}
             {user ? (
+              <>
+              {access.data?.isAdmin ? <Link to="/admin" onClick={() => setOpen(false)} className="py-4 text-[20px] font-medium">Admin dashboard</Link> : null}
               <button
                 type="button"
                 onClick={handleSignOut}
@@ -159,6 +170,7 @@ export function SiteNav() {
               >
                 Sign out
               </button>
+              </>
             ) : (
               <Link
                 to="/signin"

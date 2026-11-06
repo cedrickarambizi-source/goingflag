@@ -4,8 +4,12 @@ import { GfButton, GfButtonLink, SectionHead } from "@/components/gf/ui";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
 import { useAuth } from "@/hooks/useAuth";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { getAdminAccess } from "@/lib/gf/admin.functions";
 
 export const Route = createFileRoute("/signin")({
+  validateSearch: (search: Record<string, unknown>): { admin?: boolean } => ({ admin: search['admin'] === true || search['admin'] === "true" }),
   head: () => ({
     meta: [
       { property: "og:type", content: "website" },
@@ -44,6 +48,20 @@ function friendly(message: string) {
 function SignIn() {
   const navigate = useNavigate();
   const { user, signOut } = useAuth();
+  const { admin } = Route.useSearch();
+  const queryClient = useQueryClient();
+  const checkAdmin = useServerFn(getAdminAccess);
+  const access = useQuery({ queryKey: ["admin-access", user?.id], queryFn: () => checkAdmin(), enabled: Boolean(user), retry: false });
+  async function openAccount() {
+    const result = await checkAdmin();
+    navigate({ to: result.isAdmin ? "/admin" : "/trips" });
+  }
+  async function logout() {
+    await queryClient.cancelQueries();
+    queryClient.clear();
+    await signOut();
+    navigate({ to: "/signin", search: { admin }, replace: true });
+  }
 
   const [mode, setMode] = useState<Mode>("signin");
   const [email, setEmail] = useState("");
@@ -87,11 +105,11 @@ function SignIn() {
         const { data, error } = await supabase.auth.signUp({
           email: email.trim(),
           password,
-          options: { emailRedirectTo: `${window.location.origin}/trips` },
+          options: { emailRedirectTo: `${window.location.origin}/signin${admin ? "?admin=true" : ""}` },
         });
         if (error) throw error;
         if (data.session) {
-          navigate({ to: "/trips" });
+          await openAccount();
           return;
         }
         setNotice(
@@ -101,7 +119,7 @@ function SignIn() {
       } else if (mode === "signin") {
         const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
         if (error) throw error;
-        navigate({ to: "/trips" });
+        await openAccount();
       } else {
         const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
           redirectTo: `${window.location.origin}/reset-password`,
@@ -131,18 +149,20 @@ function SignIn() {
         <div className="max-w-md">
           <SectionHead index="Account" title="You're signed in" {...(user.email ? { intro: user.email } : {})} />
           <div className="mt-[30px] flex flex-wrap gap-[10px]">
+            {access.data?.isAdmin ? <GfButtonLink to="/admin">Admin dashboard</GfButtonLink> : null}
             <GfButtonLink to="/trips">Open my trips</GfButtonLink>
-            <GfButton variant="secondary" onClick={() => signOut()}>
+            <GfButton variant="secondary" onClick={logout}>
               Sign out
             </GfButton>
           </div>
+          {admin && !access.isPending && !access.data?.isAdmin ? <p role="alert" className="gf-body mt-5 text-muted-foreground">This account does not have administrator access.</p> : null}
         </div>
       </div>
     );
   }
 
   const heading =
-    mode === "signin" ? "Sign in" : mode === "signup" ? "Create an account" : "Reset your password";
+    mode === "signin" ? (admin ? "Admin sign-in" : "Sign in") : mode === "signup" ? "Create an account" : "Reset your password";
   const intro =
     mode === "forgot"
       ? "Enter the email on your account and we'll send a secure reset link."
@@ -152,6 +172,7 @@ function SignIn() {
     <div className="gf-shell gf-section">
       <div className="max-w-md">
         <SectionHead index="Account" title={heading} intro={intro} />
+        <div className="mt-5"><GfButtonLink to="/signin" search={{ admin: !admin }} variant="quiet">{admin ? "Traveller sign-in" : "Admin sign-in"}</GfButtonLink></div>
 
         {mode !== "forgot" ? (
           <>
