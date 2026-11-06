@@ -10,7 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as DealsRouteImport } from './routes/deals'
 import { Route as ExperiencesRouteImport } from './routes/experiences'
@@ -20,6 +22,7 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SigninRouteImport } from './routes/signin'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as TripsRouteImport } from './routes/trips'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as BookingReferenceRouteImport } from './routes/booking.$reference'
 import { Route as DestinationsIndexRouteImport } from './routes/destinations.index'
 import { Route as DestinationsSlugRouteImport } from './routes/destinations.$slug'
@@ -31,9 +34,18 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CheckoutRoute = CheckoutRouteImport.update({
@@ -81,6 +93,11 @@ const TripsRoute = TripsRouteImport.update({
   path: '/trips',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const BookingReferenceRoute = BookingReferenceRouteImport.update({
   id: '/booking/$reference',
   path: '/booking/$reference',
@@ -110,6 +127,7 @@ const HotelsSlugRoute = HotelsSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
   '/checkout': typeof CheckoutRoute
   '/deals': typeof DealsRoute
   '/experiences': typeof ExperiencesRoute
@@ -119,6 +137,7 @@ export interface FileRoutesByFullPath {
   '/signin': typeof SigninRoute
   '/support': typeof SupportRoute
   '/trips': typeof TripsRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/booking/$reference': typeof BookingReferenceRoute
   '/destinations/$slug': typeof DestinationsSlugRoute
   '/hotels/$slug': typeof HotelsSlugRoute
@@ -128,6 +147,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
   '/checkout': typeof CheckoutRoute
   '/deals': typeof DealsRoute
   '/experiences': typeof ExperiencesRoute
@@ -137,6 +157,7 @@ export interface FileRoutesByTo {
   '/signin': typeof SigninRoute
   '/support': typeof SupportRoute
   '/trips': typeof TripsRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/booking/$reference': typeof BookingReferenceRoute
   '/destinations/$slug': typeof DestinationsSlugRoute
   '/hotels/$slug': typeof HotelsSlugRoute
@@ -146,7 +167,9 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
   '/checkout': typeof CheckoutRoute
   '/deals': typeof DealsRoute
   '/experiences': typeof ExperiencesRoute
@@ -156,6 +179,7 @@ export interface FileRoutesById {
   '/signin': typeof SigninRoute
   '/support': typeof SupportRoute
   '/trips': typeof TripsRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/booking/$reference': typeof BookingReferenceRoute
   '/destinations/$slug': typeof DestinationsSlugRoute
   '/hotels/$slug': typeof HotelsSlugRoute
@@ -167,6 +191,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/auth'
     | '/checkout'
     | '/deals'
     | '/experiences'
@@ -176,6 +201,7 @@ export interface FileRouteTypes {
     | '/signin'
     | '/support'
     | '/trips'
+    | '/admin'
     | '/booking/$reference'
     | '/destinations/$slug'
     | '/hotels/$slug'
@@ -185,6 +211,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/auth'
     | '/checkout'
     | '/deals'
     | '/experiences'
@@ -194,6 +221,7 @@ export interface FileRouteTypes {
     | '/signin'
     | '/support'
     | '/trips'
+    | '/admin'
     | '/booking/$reference'
     | '/destinations/$slug'
     | '/hotels/$slug'
@@ -202,7 +230,9 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/about'
+    | '/auth'
     | '/checkout'
     | '/deals'
     | '/experiences'
@@ -212,6 +242,7 @@ export interface FileRouteTypes {
     | '/signin'
     | '/support'
     | '/trips'
+    | '/_authenticated/admin'
     | '/booking/$reference'
     | '/destinations/$slug'
     | '/hotels/$slug'
@@ -221,7 +252,9 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
+  AuthRoute: typeof AuthRoute
   CheckoutRoute: typeof CheckoutRoute
   DealsRoute: typeof DealsRoute
   ExperiencesRoute: typeof ExperiencesRoute
@@ -247,11 +280,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/checkout': {
@@ -317,6 +364,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TripsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/booking/$reference': {
       id: '/booking/$reference'
       path: '/booking/$reference'
@@ -355,9 +409,22 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
+  AuthRoute: AuthRoute,
   CheckoutRoute: CheckoutRoute,
   DealsRoute: DealsRoute,
   ExperiencesRoute: ExperiencesRoute,
