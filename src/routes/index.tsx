@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { HeroSearch } from "@/components/gf/HeroSearch";
 import { ArrowLink, GfButtonLink, SectionHead } from "@/components/gf/ui";
 import { HomeStays } from "@/components/gf/HomeStays";
@@ -81,7 +81,7 @@ function Home() {
       </section>
 
       <section className="gf-shell gf-section">
-        <SectionHead index="Rwanda" title="Explore Kigali" action={<ArrowLink to="/hotels" search={{ destination: "Kigali" }}>Find stays</ArrowLink>} />
+        <SectionHead index="Rwanda" title="Explore Kigali" action={<ArrowLink to="/hotels" search={() => ({ destination: "Kigali" })}>Find stays</ArrowLink>} />
         <div className="mt-8 grid gap-8 md:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] md:items-center">
           <figure className="min-w-0">
             <img src={kigaliPhoto.url} alt="Kigali city street and skyline photographed by Emmanuel Kwizera" loading="lazy" className="aspect-[3/2] w-full rounded-lg object-cover" />
@@ -90,7 +90,7 @@ function Home() {
               {" · "}<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noreferrer" className="underline">CC BY-SA 4.0</a>{" · Cropped for display"}
             </figcaption>
           </figure>
-          <div><p className="gf-caption text-emerald">Kigali · Rwanda</p><h3 className="gf-heading mt-4">A city in the hills</h3><p className="mt-5 text-lg leading-relaxed text-muted-foreground">Rwanda’s capital brings together hilltop neighbourhoods, local markets and the Kigali Convention Centre. Discover stays across the city for your next visit.</p><GfButtonLink to="/hotels" search={{ destination: "Kigali" }} className="mt-6">Explore Kigali stays</GfButtonLink></div>
+          <div><p className="gf-caption text-emerald">Kigali · Rwanda</p><h3 className="gf-heading mt-4">A city in the hills</h3><p className="mt-5 text-lg leading-relaxed text-muted-foreground">Rwanda’s capital brings together hilltop neighbourhoods, local markets and the Kigali Convention Centre. Discover stays across the city for your next visit.</p><GfButtonLink to="/hotels" search={() => ({ destination: "Kigali" })} className="mt-6">Explore Kigali stays</GfButtonLink></div>
         </div>
       </section>
 
