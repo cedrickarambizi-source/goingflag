@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { GfButton, GfButtonLink, SectionHead } from "@/components/gf/ui";
 import { supabase } from "@/integrations/supabase/client";
@@ -172,7 +172,7 @@ function SignIn() {
     <div className="gf-shell gf-section">
       <div className="max-w-md">
         <SectionHead index="Account" title={heading} intro={intro} />
-        <div className="mt-5"><GfButtonLink to="/signin" search={admin ? {} : { admin: true }} variant="quiet">{admin ? "Traveller sign-in" : "Admin sign-in"}</GfButtonLink></div>
+        <div className="mt-5"><Link to="/signin" search={admin ? {} : { admin: true }} className="gf-body text-graphite underline underline-offset-4 hover:text-ink">{admin ? "Traveller sign-in" : "Admin sign-in"}</Link></div>
 
         {mode !== "forgot" ? (
           <>
