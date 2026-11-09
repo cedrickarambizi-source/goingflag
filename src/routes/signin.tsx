@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { GfButton, GfButtonLink, SectionHead } from "@/components/gf/ui";
 import { supabase } from "@/integrations/supabase/client";
@@ -9,7 +9,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { getAdminAccess } from "@/lib/gf/admin.functions";
 
 export const Route = createFileRoute("/signin")({
-  validateSearch: (search: Record<string, unknown>): { admin?: boolean } => ({ admin: search['admin'] === true || search['admin'] === "true" }),
+  validateSearch: (search: Record<string, unknown>): { admin?: boolean } => (search['admin'] === true || search['admin'] === "true" ? { admin: true } : {}),
   head: () => ({
     meta: [
       { property: "og:type", content: "website" },
@@ -60,7 +60,7 @@ function SignIn() {
     await queryClient.cancelQueries();
     queryClient.clear();
     await signOut();
-    navigate({ to: "/signin", search: { admin }, replace: true });
+    navigate({ to: "/signin", search: admin ? { admin: true } : {}, replace: true });
   }
 
   const [mode, setMode] = useState<Mode>("signin");
@@ -172,7 +172,7 @@ function SignIn() {
     <div className="gf-shell gf-section">
       <div className="max-w-md">
         <SectionHead index="Account" title={heading} intro={intro} />
-        <div className="mt-5"><GfButtonLink to="/signin" search={{ admin: !admin }} variant="quiet">{admin ? "Traveller sign-in" : "Admin sign-in"}</GfButtonLink></div>
+        <div className="mt-5"><Link to="/signin" search={admin ? {} : { admin: true }} className="gf-body text-graphite underline underline-offset-4 hover:text-ink">{admin ? "Traveller sign-in" : "Admin sign-in"}</Link></div>
 
         {mode !== "forgot" ? (
           <>

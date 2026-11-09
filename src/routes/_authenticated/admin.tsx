@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { RefreshCw, Search, ShieldCheck, XCircle } from "lucide-react";
-import { GfButton, GfButtonLink } from "@/components/gf/ui";
+import { GfButton } from "@/components/gf/ui";
 import { AlertDialog, AlertDialogContent, AlertDialogTitle, AlertDialogDescription } from "@/components/ui/alert-dialog";
 import { getAdminAccess, listAdminReservations, cancelAdminReservation } from "@/lib/gf/admin.functions";
 import { filterReservations } from "@/lib/gf/admin";
@@ -51,7 +51,7 @@ function AdminDashboard() {
       <ShieldCheck className="h-8 w-8 text-emerald" />
       <h1 className="gf-heading">{access.error ? "Access check unavailable" : "Administrator access required"}</h1>
       <p className="gf-body text-muted-foreground">{access.error ? "Please try again." : "This account does not have administrator access."}</p>
-      {access.error ? <GfButton onClick={() => access.refetch()}>Try again</GfButton> : <GfButtonLink to="/signin" search={{ admin: true }}>Admin sign-in</GfButtonLink>}
+      {access.error ? <GfButton onClick={() => access.refetch()}>Try again</GfButton> : <Link to="/signin" search={{ admin: true }} className="inline-flex rounded-full bg-primary px-6 py-3 text-primary-foreground">Admin sign-in</Link>}
     </div>
   );
 
