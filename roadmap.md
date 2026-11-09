@@ -1,4 +1,5 @@
 # Hotel checkout continuation
+- [ ] Replace homepage sample offers and reviews with supplier hotel results and verified destination photographs.
 - [x] Preserve supplier currency, exact quote, dates, occupancy and cancellation in checkout.
 - [x] Block local creation of Hotelbeds bookings and clarify local references are not supplier confirmations.
 - [x] Verify hotel search → details → checkout with an account and run quote tests.
